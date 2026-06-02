@@ -68,6 +68,4 @@ jobs:
           local-dir: ./out/
           server-dir: ${{ secrets.FTP_REMOTE_PATH || '/' }}
           log-level: minimal
-          # 首次部署：清空遠端目錄再整包上傳。第一次成功後請移除此行改增量同步
-          #（增量靠遠端自動建立的 .ftp-deploy-sync-state.json 追蹤差異）。
-          dangerous-clean-slate: true
+          # 增量同步：靠遠端 .ftp-deploy-sync-state.json 追蹤差異（首次 clean-slate 已完成）。
