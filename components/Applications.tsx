@@ -1,5 +1,6 @@
 'use client';
 // 產品應用 — 金箔 / 奈米金 / 奈米銀 三家族分區（文案暫內嵌，i18n 留收尾）。原 applications.jsx。
+import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useReveal, useHashScroll } from '@/lib/reveal';
 import PhImg from '@/components/PhImg';
@@ -11,6 +12,7 @@ type SceneData = {
   em?: string;
   kw: string;
   lock: number;
+  images?: string[];
   p: string;
   list: [string, string][];
 };
@@ -37,6 +39,11 @@ const FOIL_SCENES: SceneData[] = [
     em: '的儀式感',
     kw: 'fine-dining,dessert,gold',
     lock: 22,
+    images: [
+      '/images/applications/foil-food-1.jpg',
+      '/images/applications/foil-food-2.jpg',
+      '/images/applications/foil-food-3.jpg',
+    ],
     p: '為甜點、和菓子、會席與宴席桌面點上一抹真金。金箔、金片、金絲，依菜色與場合選擇，瞬間提升質感與儀式感。',
     list: [
       ['甜點烘焙', '蛋糕、馬卡龍、巧克力面層點綴'],
@@ -51,6 +58,7 @@ const FOIL_SCENES: SceneData[] = [
     em: '的流金',
     kw: 'champagne,cocktail,gold',
     lock: 41,
+    images: ['/images/applications/foil-wine-1.jpg'],
     p: '9999 純金箔懸浮於酒體與飲品之中，隨光流轉。汽化金箔更薄、更易均勻分布，入口無感，是金箔酒與調飲的理想素材。',
     list: [
       ['金箔酒', '金釀黃金酒、氣泡酒、烈酒'],
@@ -105,13 +113,41 @@ const SILVER_SCENES: SceneData[] = [
   },
 ];
 
+function SceneCarousel({ images, cap }: { images: string[]; cap: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (images.length < 2) return;
+    const t = setInterval(() => setIdx((v) => (v + 1) % images.length), 4200);
+    return () => clearInterval(t);
+  }, [images.length]);
+  return (
+    <div className="ph">
+      {images.map((src, i) => (
+        <img
+          key={src}
+          className="ph-img"
+          src={src}
+          alt=""
+          loading="lazy"
+          style={{ opacity: i === idx ? 1 : 0, transition: 'opacity .9s ease' }}
+        />
+      ))}
+      <span className="cap">{cap}</span>
+    </div>
+  );
+}
+
 function Scene({ d, steel }: { d: SceneData; steel?: boolean }) {
   return (
     <div className={'scene reveal' + (d.flip ? ' flip' : '')}>
-      <div className="ph">
-        <PhImg kw={d.kw} lock={d.lock} />
-        <span className="cap">{d.k}</span>
-      </div>
+      {d.images && d.images.length > 0 ? (
+        <SceneCarousel images={d.images} cap={d.k} />
+      ) : (
+        <div className="ph">
+          <PhImg kw={d.kw} lock={d.lock} />
+          <span className="cap">{d.k}</span>
+        </div>
+      )}
       <div className="sc-body">
         <span className="kicker" style={steel ? { color: 'var(--nano-steel)' } : undefined}>
           {d.k}

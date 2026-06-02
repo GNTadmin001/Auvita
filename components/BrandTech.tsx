@@ -93,6 +93,34 @@ export default function BrandTech() {
             <div className="dstat"><div className="dv">0</div><div className="dl">化學還原劑</div></div>
             <div className="dstat"><div className="dv">¼</div><div className="dl">金箔薄度 vs 傳統</div></div>
           </div>
+          <div
+            className="reveal d2"
+            style={{
+              marginTop: '44px',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
+              gap: '16px',
+            }}
+          >
+            <div className="ph" style={{ height: '320px', borderRadius: '6px' }}>
+              <img
+                className="ph-img"
+                src="/images/brand-tech/evap-vs-traditional.jpg"
+                alt="汽化金箔與傳統金箔的顯微與電子顯微對比"
+                loading="lazy"
+              />
+              <span className="cap">汽化 vs 傳統 · 顯微對比</span>
+            </div>
+            <div className="ph" style={{ height: '320px', borderRadius: '6px' }}>
+              <img
+                className="ph-img"
+                src="/images/brand-tech/physical-vs-chemical.jpg"
+                alt="物理汽化金與化學膠體金的色澤與純度對比"
+                loading="lazy"
+              />
+              <span className="cap">物理汽化金 vs 化學膠體金</span>
+            </div>
+          </div>
         </div>
       </section>
 

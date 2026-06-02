@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:promotions": "node scripts/validate-schedule.mjs",
+    "build:active": "node scripts/build-active.mjs",
+    "build:full": "npm run validate:promotions && npm run build:active && npm run build"
   },
   "dependencies": {
     "next": "15.5.19",

@@ -11,7 +11,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <SiteHeader active="news" />
-      <News />
+      <News locale={locale} />
       <SiteFooter />
     </>
   );
