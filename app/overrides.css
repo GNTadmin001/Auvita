@@ -1,0 +1,24 @@
+/* Stage 2 新增樣式（設計 CSS 之外的補強，保持原 CSS 不被改寫）。
+   目前僅：header 三語切換器 — 原設計只畫靜態「繁 / EN」佔位，改為可點三語。 */
+.head-cta .lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.head-cta .lang button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.head-cta .lang button:hover,
+.head-cta .lang button.on {
+  color: var(--k-gold-lt);
+}
+.head-cta .lang .lang-sep {
+  opacity: 0.4;
+}

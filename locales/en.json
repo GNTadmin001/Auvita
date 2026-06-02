@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "title": "AUVITA | Edible Gold & PVD Gold Flakes",
+    "description": "Taiwan's only certified edible gold manufacturer. GNT produces 9999 pure gold flakes and powders via PVD process, triple-certified, 20+ years of R&D."
+  },
+  "common": {
+    "brandName": "AUVITA",
+    "contactUs": "Enquire Now"
+  },
+  "home": {
+    "intro": {
+      "latin": "Aurum · Per Vacuum",
+      "zh": "永恆光輝的色彩",
+      "en": "A purer form of gold — vaporized, never beaten.",
+      "scroll": "Scroll"
+    },
+    "hero": {
+      "kicker": "SNQ 國家品質標章 · 台灣唯一合法食用金",
+      "titleL1": "永恆光輝",
+      "titleL2": "的色彩",
+      "sub": "A purer form of gold — vaporized, never beaten.",
+      "lead": "當黃金不需被搥打、不再被溶解——而是化為分子的光，在真空中凝結成型。這就是汽化金，一種更極致的純粹。",
+      "ctaPrimary": "找尋送禮靈感",
+      "ctaSecondary": "了解汽化金",
+      "badges": ["衛福部認證", "歐盟 E175", "美國 FDA", "20+ 年研發"]
+    },
+    "origins": {
+      "tile1K": "Edible Leaf",
+      "tile1Zh": "食用金箔",
+      "tile2K": "Gold Dust",
+      "tile2Zh": "金粉複方",
+      "go": "選購 →",
+      "kicker": "Origins · 源起",
+      "title": "從半導體薄膜，<br></br>到<em>可品嚐的純金</em>",
+      "p1": "物理氣相沉積誕生於 20 世紀中葉，因半導體而成熟的薄膜技術。在真空中，固態黃金加熱至氣態，金原子以奈米精度降落、沉積、凝結，形成極致均勻的純金薄膜。",
+      "p2": "1993 年，<em>京華堂以冷凝技術，將黃金帶進了生醫運用。</em>一片金箔的厚度，小於光的一個波長；而它的純度，由 GNT 實驗室說了算。",
+      "readMore": "閱讀完整故事"
+    },
+    "scenes": {
+      "kicker": "Applications",
+      "title": "純金，<em>美在永恆</em>",
+      "sub": "從一杯威士忌到一份禮物，食用金讓每個珍貴的場景，都成為永恆。",
+      "items": [
+        { "en": "Cuisine", "zh": "金箔料理", "cta": "選購食用金箔", "kw": "sushi" },
+        { "en": "Patisserie", "zh": "金粉甜點", "cta": "選購金粉複方", "kw": "dessert" },
+        { "en": "Fine Spirits", "zh": "金釀黃金酒", "cta": "前往金釀聯盟", "kw": "whisky" },
+        { "en": "Celebration", "zh": "金箔蛋糕", "cta": "選購食用金箔", "kw": "cake" },
+        { "en": "Gold Pure", "zh": "金純", "cta": "選購金粉複方", "kw": "gold" },
+        { "en": "Gift", "zh": "金粉包裝", "cta": "選購禮品禮盒", "kw": "giftbox" }
+      ]
+    },
+    "symbol": {
+      "kicker": "Brand Symbol · 品牌象徵",
+      "title": "純金，<em>億萬年的光</em>",
+      "quote": "鸚鵡螺的螺旋體現黃金比例 φ＝1.618，大自然最完美的形態——如同宇宙星雲中誕生的黃金，超新星爆炸的遺產，億萬年不滅。",
+      "stats": [
+        { "v": "φ", "l": "1.618 黃金比例" },
+        { "v": "9999", "l": "純金純度" },
+        { "v": "20+", "l": "年研發" }
+      ]
+    },
+    "shopTeaser": {
+      "kicker": "Shop",
+      "title": "選擇你的<em>食用金</em>",
+      "sub": "每一款都是 9999 純金，每一款都是台灣製造。",
+      "ask": "立即詢問",
+      "items": [
+        { "tag": "最受歡迎", "name": "食用_金箔_", "desc": "9999 純金、純水，PVD 製程，薄度 100nm。無色無味，開瓶即用。", "hot": true, "kw": "goldleaf" },
+        { "tag": "Gold Dust · 無味", "name": "金粉_複方_", "desc": "9999 純金，冰糖、魚膠基底，無其他添加。適合料理使用。", "hot": false, "kw": "spice" },
+        { "tag": "Gold Dust · 香草", "name": "金粉_複方_", "desc": "9999 純金、天然香草、魚膠基底，適合點心與料理。", "hot": false, "kw": "chocolate" },
+        { "tag": "Gold Dust · 訂製", "name": "金粉_複方_", "desc": "專屬風味、甜度與包裝。企業禮品、聯名商品、品牌訂製。", "hot": false, "kw": "giftbox" }
+      ]
+    },
+    "gifts": {
+      "kicker": "Gift Moments",
+      "title": "純金，<em>永恆的元素</em>",
+      "sub": "最純淨的禮物，最誠摯的祝福。",
+      "items": [
+        { "gl": "壽", "en": "Longevity", "zh": "祝壽", "desc": "金，億萬年不變。六十、七十、八十大壽的最佳選擇。", "kw": "celebration" },
+        { "gl": "婚", "en": "Wedding", "zh": "婚禮", "desc": "金無氧化，愛也應如此。伴手禮、婚宴黃金酒、週年紀念。", "kw": "wedding" },
+        { "gl": "禮", "en": "Milestone", "zh": "里程碑", "desc": "值得以金記錄。畢業、升遷、退休、創業的見證。", "kw": "graduation" },
+        { "gl": "誕", "en": "New Life", "zh": "新生", "desc": "世間最純粹的起點。彌月、百日宴的最美禮物。", "kw": "baby" },
+        { "gl": "友", "en": "Friendship", "zh": "老友", "desc": "三十年不變的，不只金。一杯黃金威士忌，說盡情誼。", "kw": "whisky" },
+        { "gl": "己", "en": "Self Love", "zh": "犒賞自己", "desc": "不為誰，只為自己。今天你做得很好。", "kw": "spa" }
+      ]
+    },
+    "cta": {
+      "title": "現在就讓生命中的下一個時刻，<br></br><foil>閃耀如金</foil>",
+      "sub": "台灣唯一合法食用金製造商 · 20 年研發 · 全球三認證",
+      "buyGift": "選購黃金酒禮盒 ↗",
+      "inquiry": "企業採購詢問"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+# Next.js static export routing for Apache
+# public/.htaccess → out/.htaccess → FTP → www.auvita.tw 根目錄
+
+RewriteEngine On
+
+# www → 非 www（確認 SSL 憑證同時覆蓋兩者後再啟用）
+# RewriteCond %{HTTP_HOST} ^www\.auvita\.tw$ [NC]
+# RewriteRule ^ https://auvita.tw%{REQUEST_URI} [R=301,L]
+
+# 關掉 mod_dir 自動加結尾斜線（避免 /zh-TW 死循環）
+DirectorySlash Off
+
+# 預設語系：根路徑 / → /zh-TW
+RewriteRule ^$ /zh-TW [R=302,L]
+
+# 移除結尾斜線（/zh-TW/ → /zh-TW）
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# 無副檔名請求 → .html（Next.js static export 格式）
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+)$ /$1.html [L]
+
+# 自訂 404
+ErrorDocument 404 /404.html
+
+# 禁止目錄列出
+Options -Indexes
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/plain
+</IfModule>

@@ -1,0 +1,70 @@
+name: Deploy on Push
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - 'locales/**'
+      - 'app/**'
+      - 'components/**'
+      - 'i18n/**'
+      - 'middleware.ts'
+      - 'next.config.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/deploy-on-push.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    name: Build · SFTP Upload
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build Next.js (static export)
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || 'https://www.auvita.tw' }}
+        run: npm run build
+
+      - name: Verify out/ exists
+        run: |
+          test -d out || (echo "::error::out/ not generated"; exit 1)
+          echo "out/ size: $(du -sh out | cut -f1)"
+
+      - name: Upload to auvita.tw via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          local-dir: ./out/
+          server-dir: ${{ secrets.FTP_REMOTE_PATH || '/' }}
+          log-level: minimal
+          # 首次部署：清空遠端目錄再整包上傳。第一次成功後請移除此行改增量同步
+          #（增量靠遠端自動建立的 .ftp-deploy-sync-state.json 追蹤差異）。
+          dangerous-clean-slate: true

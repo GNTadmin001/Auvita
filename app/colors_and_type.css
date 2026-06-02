@@ -1,0 +1,258 @@
+/* ============================================================================
+   GNT 京華堂 · Gold NanoTech — Color & Type Foundations
+   Brand essence: 高貴 (noble) · 奢華 (luxurious) · 簡潔 (minimal)
+   A heritage gold house built on nano-science. Warm ivory paper, ink-black
+   text, 京華金 gold as the single hero accent, with the nautilus iridescence
+   reserved for rare, jewel-like moments.
+   ----------------------------------------------------------------------------
+   Fonts are loaded from Google Fonts (see fonts.css / the @import below).
+   SUBSTITUTION NOTE: GNT's print collateral uses a classical Ming/Song
+   Traditional-Chinese serif and a high-contrast Latin display serif. The
+   nearest free equivalents are Noto Serif TC (Ming) + Cormorant Garamond
+   (Latin display). Swap to the licensed faces in production if available.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+SC:wght@500;600&display=swap');
+
+:root {
+  /* ---- 京華金 · Gold scale (the brand spine) -------------------------- */
+  --gold-50:  #FBF7EC;
+  --gold-100: #F4E8C6;
+  --gold-200: #E8D29A;
+  --gold-300: #D9BC6E;
+  --gold-400: #C9A227;   /* PRIMARY — "京華金" signature gold */
+  --gold-500: #B08A24;
+  --gold-600: #8C6B1F;
+  --gold-700: #6A5119;
+  --gold-800: #493711;
+
+  /* Living gold — gradient used for the wordmark, foils & rules */
+  --gold-foil: linear-gradient(135deg, #F5E7B8 0%, #C9A227 38%, #A67C28 62%, #E2C766 100%);
+  --gold-sheen: linear-gradient(180deg, #E8D29A 0%, #C9A227 50%, #8C6B1F 100%);
+
+  /* ---- Ink & warm neutrals (paper + type) ---------------------------- */
+  --ink-900: #1A1815;   /* near-black, warm — primary text on light */
+  --ink-800: #2A261F;
+  --ink-700: #3A342B;
+  --ink-600: #5A5246;   /* secondary text */
+  --ink-500: #7C7464;   /* muted / captions */
+  --ink-400: #9C9384;
+  --ink-300: #C3BBAB;
+  --ink-200: #DED7C7;   /* hairline borders */
+  --ink-100: #EFEADE;   /* subtle fills */
+  --ivory:   #FAF7F0;   /* page background — warm paper */
+  --ivory-deep: #F2ECDF;
+  --white:   #FFFFFF;
+
+  /* ---- Nautilus iridescence (rare jewel accents, never for text) ----- */
+  --irid-blue:   #7FA8D8;
+  --irid-violet: #A88BC4;
+  --irid-rose:   #D79BB0;
+  --irid-jade:   #A8C97F;
+  --irid-amber:  #E2C766;
+  --irid-arc: linear-gradient(120deg,
+      #7FA8D8 0%, #A88BC4 24%, #D79BB0 46%, #E2C766 70%, #A8C97F 100%);
+
+  /* ---- Semantic surface tokens --------------------------------------- */
+  --bg:            var(--ivory);
+  --bg-elevated:   var(--white);
+  --bg-ink:        var(--ink-900);   /* dark luxury sections */
+  --bg-ink-soft:   #221E18;
+  --surface:       var(--white);
+  --surface-sunken: var(--ivory-deep);
+
+  --fg:            var(--ink-900);
+  --fg-secondary:  var(--ink-600);
+  --fg-muted:      var(--ink-500);
+  --fg-on-ink:     #F3EEE2;          /* text on dark sections */
+  --fg-on-ink-muted: #B7AE9A;
+
+  --accent:        var(--gold-400);
+  --accent-strong: var(--gold-600);
+  --accent-soft:   var(--gold-100);
+
+  --border:        var(--ink-200);
+  --border-strong: var(--ink-300);
+  --border-gold:   rgba(201,162,39,0.42);
+  --hairline-ink:  rgba(26,24,21,0.12);
+  --hairline-light:rgba(255,255,255,0.16);
+
+  /* status — kept muted & on-brand */
+  --positive: #6E8C4A;
+  --notice:   #C98A27;
+  --critical: #A6492F;
+
+  /* ---- Type families -------------------------------------------------- */
+  --font-serif:  "Noto Serif TC", "Songti TC", "STSong", serif;          /* 標題 · Ming display */
+  --font-latin-display: "Cormorant Garamond", "Noto Serif TC", serif;     /* Latin luxury display */
+  --font-latin-sc: "Cormorant SC", "Cormorant Garamond", serif;           /* small-caps labels */
+  --font-sans:   "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-mono:   "SFMono-Regular", "Roboto Mono", ui-monospace, monospace;
+
+  /* ---- Type scale (1.250 major-third, paper-document baseline) -------- */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   22px;
+  --text-xl:   28px;
+  --text-2xl:  36px;
+  --text-3xl:  48px;
+  --text-4xl:  64px;
+  --text-5xl:  84px;
+  --text-display: 116px;
+
+  --leading-tight: 1.12;
+  --leading-snug:  1.28;
+  --leading-body:  1.7;
+  --leading-loose: 1.9;
+
+  /* refined letter-spacing — luxury loves air */
+  --tracking-display: -0.01em;
+  --tracking-label:   0.28em;   /* the GNT signature wide-tracked label */
+  --tracking-cjk:     0.14em;   /* CJK headings breathe wide */
+
+  /* ---- Spacing (8px base, generous) ---------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 176px;
+
+  /* ---- Radius — small & restrained; luxury favours crisp edges -------- */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* ---- Elevation — soft, warm, low-contrast (paper, not plastic) ----- */
+  --shadow-xs: 0 1px 2px rgba(26,24,21,0.05);
+  --shadow-sm: 0 2px 8px rgba(26,24,21,0.06);
+  --shadow-md: 0 10px 30px -12px rgba(26,24,21,0.18);
+  --shadow-lg: 0 26px 60px -24px rgba(26,24,21,0.28);
+  --shadow-gold: 0 14px 40px -16px rgba(140,107,31,0.45);
+  --ring-gold: 0 0 0 1px rgba(201,162,39,0.55);
+
+  /* ---- Motion — slow, deliberate, expensive -------------------------- */
+  --ease-silk: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-rise: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 620ms;
+}
+
+/* ============================================================================
+   Semantic element styles — apply with classes, or copy into your reset.
+   ========================================================================== */
+
+.gnt-body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display — Latin luxury serif, for hero numerals & English moments */
+.gnt-display {
+  font-family: var(--font-latin-display);
+  font-weight: 500;
+  font-size: var(--text-display);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg);
+}
+
+/* CJK headings — Ming serif, wide tracking, the house voice */
+.gnt-h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--text-3xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-cjk);
+  color: var(--fg);
+}
+.gnt-h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-cjk);
+  color: var(--fg);
+}
+.gnt-h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  letter-spacing: 0.08em;
+  color: var(--fg);
+}
+.gnt-h4 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
+  letter-spacing: 0.04em;
+  color: var(--fg);
+}
+
+/* Eyebrow / kicker — the wide-tracked small-cap label, GNT's signature */
+.gnt-eyebrow {
+  font-family: var(--font-latin-sc);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.gnt-lead {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: var(--text-lg);
+  line-height: var(--leading-loose);
+  color: var(--fg-secondary);
+}
+
+.gnt-body-text {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--fg-secondary);
+}
+
+.gnt-caption {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+
+/* Gold-foil text fill (use on the wordmark or hero numerals only) */
+.gnt-gold-text {
+  background: var(--gold-foil);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gold-500);
+}
+
+/* Hairline gold rule */
+.gnt-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--gold-400) 18%, var(--gold-600) 50%, var(--gold-400) 82%, transparent);
+  opacity: 0.7;
+}
