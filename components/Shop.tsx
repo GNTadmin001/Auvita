@@ -52,6 +52,7 @@ export default function Shop() {
   //   #foil-wine 等商品 id → 切到該商品所屬家族，捲動定位並短暫高亮該卡。
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
+    const rafs: number[] = [];
     const applyHash = () => {
       const h = (window.location.hash || '').replace('#', '');
       if (!h) return;
@@ -60,23 +61,28 @@ export default function Shop() {
         return;
       }
       const prod = PRODUCTS.find((p) => p.id === h);
-      if (prod) {
-        setFilter(prod.fam);
-        setHighlightId(h);
-        // 等 filter 套用、卡片掛上後再捲動定位（避開 React render 競態）。
-        timers.push(
-          setTimeout(() => {
-            document.getElementById(h)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 120),
-        );
-        timers.push(setTimeout(() => setHighlightId(''), 2200));
-      }
+      if (!prod) return;
+      setFilter(prod.fam);
+      setHighlightId(h);
+      // 雙 rAF：等 React commit + 該 frame 繪製，DOM 確定掛好後再 scroll；
+      // scroll 前強制把所有 .reveal 立刻顯示（否則 reveal opacity 0→1 的 1.1s
+      // transition 會疊在 smooth scroll 上，視覺像「圖片消失 2 秒再出現」）。
+      const r1 = requestAnimationFrame(() => {
+        const r2 = requestAnimationFrame(() => {
+          document.querySelectorAll('.reveal').forEach((e) => e.classList.add('in'));
+          document.getElementById(h)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        rafs.push(r2);
+      });
+      rafs.push(r1);
+      timers.push(setTimeout(() => setHighlightId(''), 2200));
     };
     applyHash();
     window.addEventListener('hashchange', applyHash);
     return () => {
       window.removeEventListener('hashchange', applyHash);
       timers.forEach(clearTimeout);
+      rafs.forEach(cancelAnimationFrame);
     };
   }, []);
 

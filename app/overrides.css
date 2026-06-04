@@ -41,3 +41,172 @@
 .prod.flash {
   animation: auvita-flash 1.8s ease;
 }
+
+/* ============================ Mobile hamburger menu ============================
+   原設計只支援 desktop nav；手機板（≤900px）原本只剩購物車。
+   新增 hamburger 按鈕 + 全螢幕滑入面板，含主要連結 / 產品應用三項 / 三語切換。 */
+.menu-btn {
+  display: none; /* desktop 隱藏，≤900px 才出 */
+  width: 36px;
+  height: 36px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 90;
+}
+.menu-btn > span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--k-white);
+  transition: transform 0.32s var(--ease-rise), opacity 0.32s var(--ease-rise);
+  transform-origin: center;
+}
+.menu-btn.on > span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.menu-btn.on > span:nth-child(2) {
+  opacity: 0;
+}
+.menu-btn.on > span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 75; /* < 站頭 80，但 panel 視覺上仍蓋住內容 */
+  display: none;
+}
+.mobile-nav.open {
+  display: block;
+}
+.mobile-nav .mn-back {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 3, 2, 0.62);
+  backdrop-filter: blur(6px);
+}
+.mobile-nav .mn-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(360px, 86vw);
+  background: rgba(10, 9, 8, 0.98);
+  border-left: 1px solid var(--k-line-soft);
+  padding: 96px 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+}
+.mobile-nav .mn-link {
+  display: block;
+  padding: 14px 4px;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  letter-spacing: 0.12em;
+  color: var(--k-white);
+  border-bottom: 1px solid var(--k-line-soft);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.mobile-nav .mn-link:hover,
+.mobile-nav .mn-link.on {
+  color: var(--k-gold-lt);
+}
+.mobile-nav .mn-group {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--k-line-soft);
+}
+.mobile-nav .mn-group-h {
+  font-family: var(--font-latin-sc);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--k-mute);
+  padding: 0 4px 6px;
+}
+.mobile-nav .mn-sublink {
+  display: block;
+  padding: 10px 4px 11px;
+  text-decoration: none;
+  border-bottom: 1px dashed var(--k-line-soft);
+  transition: color 0.3s, padding 0.3s var(--ease-rise);
+}
+.mobile-nav .mn-sublink:hover {
+  padding-left: 10px;
+}
+.mobile-nav .mn-sublink.lead .mn-sub-zh {
+  color: var(--k-gold-lt);
+}
+.mobile-nav .mn-sub-zh {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  letter-spacing: 0.08em;
+  color: var(--k-white);
+}
+.mobile-nav .mn-sub-en {
+  display: block;
+  font-family: var(--font-latin-sc);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--k-mute);
+  margin-top: 4px;
+}
+.mobile-nav .mn-lang {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--k-line-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-latin-sc);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--k-dim);
+}
+.mobile-nav .mn-lang button {
+  background: none;
+  border: none;
+  padding: 4px 2px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.mobile-nav .mn-lang button:hover,
+.mobile-nav .mn-lang button.on {
+  color: var(--k-gold-lt);
+}
+.mobile-nav .mn-lang-sep {
+  opacity: 0.4;
+}
+
+@media (max-width: 900px) {
+  .menu-btn {
+    display: inline-flex;
+  }
+  /* 手機板：縮短 brand 子標、避免擠到 hamburger */
+  .site-head .brand .wm {
+    font-size: 16px;
+  }
+  .site-head .brand .wm small {
+    display: none;
+  }
+  .head-cta {
+    gap: 12px;
+  }
+}
+
