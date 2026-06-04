@@ -575,5 +575,55 @@
   "marquee": {
     "ariaLabel": "食用金應用",
     "labels": ["蛋糕", "抹茶", "巧克力", "馬卡龍", "咖啡", "和果子", "香檳", "威士忌"]
+  },
+  "header": {
+    "brandName": "京華金",
+    "brandTagline": "GOLD NANOTECH · SINCE 1993",
+    "menuLabel": "選單",
+    "nav": {
+      "home": "首頁",
+      "goldHistory": "金的歷史",
+      "brandTech": "品牌與技術",
+      "applications": "產品應用",
+      "shop": "選購",
+      "news": "最新活動",
+      "contact": "聯絡我們"
+    },
+    "appMenu": {
+      "overviewLabel": "產品應用總覽",
+      "overviewDesc": "Applications · Overview",
+      "foilLabel": "金箔",
+      "foilDesc": "Gold Leaf · 化妝品 · 食品 · 酒",
+      "nanoGoldLabel": "奈米金",
+      "nanoGoldDesc": "Nano Gold · 美容 · 藥物載體",
+      "nanoSilverLabel": "奈米銀",
+      "nanoSilverDesc": "Nano Silver · 殺菌抗菌"
+    }
+  },
+  "footer": {
+    "brandName": "京華金",
+    "brandTagline": "GOLD NANOTECH · SINCE 1993",
+    "blurb": "以食用金為本，同一道汽化式（PVD）工藝延伸至奈米金、奈米銀。台灣唯一合法食用金製造商，9999 純金，世界級純淨與分散均勻度。",
+    "cols": {
+      "explore": "探索",
+      "shop": "選購",
+      "ecosystem": "品牌生態系"
+    },
+    "links": {
+      "goldHistory": "金的歷史",
+      "brandTech": "品牌與技術",
+      "applications": "產品應用",
+      "news": "最新活動",
+      "allProducts": "全部商品",
+      "foilProducts": "金箔商品",
+      "nanoGoldProducts": "奈米金商品",
+      "nanoSilverProducts": "奈米銀商品",
+      "gntSite": "GNT 技術官網",
+      "goldAlliance": "金釀聯盟 酒廠",
+      "museumStore": "黃金博物館門市",
+      "contactUs": "聯絡我們"
+    },
+    "copyright": "© 2026 Gold NanoTech, Inc. 京華堂實業股份有限公司 · 台北市內湖區瑞光路 258 巷 52 號 · TWSE 1267",
+    "tagline": "Crafted with Science · Since 1993"
   }
 }

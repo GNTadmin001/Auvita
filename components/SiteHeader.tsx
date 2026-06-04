@@ -1,34 +1,10 @@
 'use client';
-// 統一站頭（編輯式導覽 + 三語切換 + 購物車 + ≤900px hamburger）。原 site.jsx 的 SiteHeader/NavGroup/Chev。
-// transparent：首頁 cover 上以透明態起始，捲過 splash 後淡入實底。
 import { Fragment, useEffect, useState } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link, useRouter, usePathname } from '@/i18n/navigation';
 import CartButton from '@/components/CartButton';
 import CartDrawer from '@/components/CartDrawer';
-
-// 產品應用 ▾ — 三分類：金箔 / 奈米金 / 奈米銀（奈米銀為佔位）
-const APP_MENU = [
-  { zh: '產品應用總覽', en: 'Applications · Overview', href: '/applications', lead: true },
-  { zh: '金箔', en: 'Gold Leaf · 化妝品 · 食品 · 酒', href: '/applications#foil' },
-  { zh: '奈米金', en: 'Nano Gold · 美容 · 藥物載體', href: '/applications#nano-gold' },
-  { zh: '奈米銀', en: 'Nano Silver · 殺菌抗菌', href: '/applications#nano-silver' },
-];
-
-const MAIN_LINKS: { href: string; zh: string; active: string }[] = [
-  { href: '/', zh: '首頁', active: 'home' },
-  { href: '/gold-history', zh: '金的歷史', active: 'history' },
-  { href: '/brand-tech', zh: '品牌與技術', active: 'brand' },
-  { href: '/shop', zh: '選購', active: 'shop' },
-  { href: '/news', zh: '最新活動', active: 'news' },
-  { href: '/contact', zh: '聯絡我們', active: 'contact' },
-];
-
-const LANGS: [string, string][] = [
-  ['zh-TW', '繁'],
-  ['en', 'EN'],
-  ['ja', '日'],
-];
+import { NAV_LINKS, APP_MENU, LANGS, type AppMenuItem } from '@/lib/content/header.layout';
 
 function Chev() {
   return (
@@ -42,10 +18,12 @@ function NavGroup({
   label,
   items,
   on,
+  t,
 }: {
   label: string;
-  items: typeof APP_MENU;
+  items: AppMenuItem[];
   on: boolean;
+  t: (key: string) => string;
 }) {
   return (
     <div className={'navgroup' + (on ? ' on' : '')}>
@@ -56,8 +34,8 @@ function NavGroup({
       <div className="submenu">
         {items.map((it) => (
           <Link key={it.href} href={it.href} className={it.lead ? 'lead-link' : ''}>
-            <span className="sm-zh">{it.zh}</span>
-            <span className="sm-en">{it.en}</span>
+            <span className="sm-zh">{t(`appMenu.${it.key}Label`)}</span>
+            <span className="sm-en">{t(`appMenu.${it.key}Desc`)}</span>
           </Link>
         ))}
       </div>
@@ -78,6 +56,7 @@ export default function SiteHeader({
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('header');
 
   useEffect(() => {
     if (!transparent) {
@@ -103,7 +82,6 @@ export default function SiteHeader({
     };
   }, [transparent]);
 
-  // mobile menu 開啟時鎖住 body scroll；ESC 關閉。
   useEffect(() => {
     if (!menuOpen) return;
     const prev = document.body.style.overflow;
@@ -132,29 +110,25 @@ export default function SiteHeader({
           <Link className="brand" href="/" onClick={() => setMenuOpen(false)}>
             <img src="/assets/logo-nautilus-gold.png" alt="" />
             <span className="wm">
-              京華金<small>GOLD NANOTECH · SINCE 1993</small>
+              {t('brandName')}<small>{t('brandTagline')}</small>
             </span>
           </Link>
           <nav className="mainnav">
-            <Link href="/" className={a === 'home' ? 'on' : ''}>
-              首頁
-            </Link>
-            <Link href="/gold-history" className={a === 'history' ? 'on' : ''}>
-              金的歷史
-            </Link>
-            <Link href="/brand-tech" className={a === 'brand' ? 'on' : ''}>
-              品牌與技術
-            </Link>
-            <NavGroup label="產品應用" items={APP_MENU} on={a === 'apps'} />
-            <Link href="/shop" className={a === 'shop' ? 'on' : ''}>
-              選購
-            </Link>
-            <Link href="/news" className={a === 'news' ? 'on' : ''}>
-              最新活動
-            </Link>
-            <Link href="/contact" className={a === 'contact' ? 'on' : ''}>
-              聯絡我們
-            </Link>
+            {NAV_LINKS.map((l) => (
+              <Fragment key={l.key}>
+                {l.active === 'shop' && (
+                  <NavGroup
+                    label={t('nav.applications')}
+                    items={APP_MENU}
+                    on={a === 'apps'}
+                    t={t}
+                  />
+                )}
+                <Link href={l.href} className={a === l.active ? 'on' : ''}>
+                  {t(`nav.${l.key}`)}
+                </Link>
+              </Fragment>
+            ))}
           </nav>
           <div className="head-cta">
             <div className="lang">
@@ -175,7 +149,7 @@ export default function SiteHeader({
             <button
               type="button"
               className={'menu-btn' + (menuOpen ? ' on' : '')}
-              aria-label="選單"
+              aria-label={t('menuLabel')}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
               onClick={() => setMenuOpen((v) => !v)}
@@ -197,19 +171,19 @@ export default function SiteHeader({
       >
         <div className="mn-back" onClick={() => setMenuOpen(false)} aria-hidden />
         <nav className="mn-panel" onClick={(e) => e.stopPropagation()}>
-          {MAIN_LINKS.map((l) => (
+          {NAV_LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={'mn-link' + (a === l.active ? ' on' : '')}
               onClick={() => setMenuOpen(false)}
             >
-              {l.zh}
+              {t(`nav.${l.key}`)}
             </Link>
           ))}
 
           <div className="mn-group">
-            <div className="mn-group-h">產品應用</div>
+            <div className="mn-group-h">{t('nav.applications')}</div>
             {APP_MENU.map((it) => (
               <Link
                 key={it.href}
@@ -217,8 +191,8 @@ export default function SiteHeader({
                 className={'mn-sublink' + (it.lead ? ' lead' : '')}
                 onClick={() => setMenuOpen(false)}
               >
-                <span className="mn-sub-zh">{it.zh}</span>
-                <span className="mn-sub-en">{it.en}</span>
+                <span className="mn-sub-zh">{t(`appMenu.${it.key}Label`)}</span>
+                <span className="mn-sub-en">{t(`appMenu.${it.key}Desc`)}</span>
               </Link>
             ))}
           </div>
