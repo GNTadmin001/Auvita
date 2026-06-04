@@ -1,7 +1,9 @@
 'use client';
 // 結帳 — 檢視購物車、收件表單、小計/運費/總計。確認下單為 stub（清空購物車、不接金流）。原 checkout.jsx。
-// 文字暫內嵌中文（i18n 留收尾）。SiteHeader/SiteFooter 由 page.tsx 組裝。
-import { useEffect, useState } from 'react';
+// i18n 標準分離：文字在 locales/*.json 的 `checkout` 命名空間（含 form.fields 走 t.raw 陣列）。
+// 運費規則常數（SHIP_FREE_OVER / SHIP_FEE）為商業設定，留在元件內。
+import { useEffect, useState, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useReveal } from '@/lib/reveal';
 import { Cart, ntd, useCart } from '@/lib/cart';
@@ -11,29 +13,30 @@ import PhImg from '@/components/PhImg';
 const SHIP_FREE_OVER = 3000;
 const SHIP_FEE = 160;
 
-const FIELDS: [string, string, string][] = [
-  ['收件人姓名', 'name', '請輸入姓名'],
-  ['手機', 'phone', '09xx-xxx-xxx'],
-  ['電子郵件', 'email', 'you@example.com'],
-  ['收件地址', 'addr', '縣市 / 區 / 詳細地址'],
-];
+const richTags = {
+  em: (c: ReactNode) => <em>{c}</em>,
+};
+
+type Field = { label: string; ph: string };
 
 function CheckoutForm() {
+  const t = useTranslations('checkout.form');
+  const fields = t.raw('fields') as Field[];
   return (
     <div className="co-form">
-      <h3 className="co-h">收件資訊</h3>
-      {FIELDS.map(([label, key, ph]) => (
-        <label className="co-field" key={key}>
-          <span>{label}</span>
-          <input type="text" placeholder={ph} />
+      <h3 className="co-h">{t('title')}</h3>
+      {fields.map((f, i) => (
+        <label className="co-field" key={i}>
+          <span>{f.label}</span>
+          <input type="text" placeholder={f.ph} />
         </label>
       ))}
       <label className="co-field">
-        <span>備註</span>
-        <textarea rows={2} placeholder="配送或包裝需求（選填）"></textarea>
+        <span>{t('noteLabel')}</span>
+        <textarea rows={2} placeholder={t('notePh')}></textarea>
       </label>
       <h3 className="co-h" style={{ marginTop: '38px' }}>
-        付款方式
+        {t('payTitle')}
       </h3>
       <div className="co-pay-stub">
         <div className="co-pay-ic">
@@ -43,10 +46,8 @@ function CheckoutForm() {
           </svg>
         </div>
         <div>
-          <b>金流由外部廠商串接</b>
-          <p>
-            信用卡 / ATM / 行動支付等付款流程，將由合作金流服務商於此處接入。目前為基本架構，按「確認下單」可模擬建立訂單。
-          </p>
+          <b>{t('payHead')}</b>
+          <p>{t('payDesc')}</p>
         </div>
       </div>
     </div>
@@ -54,6 +55,7 @@ function CheckoutForm() {
 }
 
 export default function Checkout() {
+  const t = useTranslations('checkout');
   const items = useCart();
   const [placed, setPlaced] = useState(false);
   useReveal();
@@ -67,17 +69,19 @@ export default function Checkout() {
   const subtotal = items.reduce((n, i) => n + i.price * i.qty, 0);
   const ship = items.length === 0 || subtotal >= SHIP_FREE_OVER ? 0 : SHIP_FEE;
   const total = subtotal + ship;
+  const totalCount = items.reduce((n, i) => n + i.qty, 0);
 
   return (
     <>
       <section className="subhero" style={{ paddingBottom: '40px' }}>
         <div className="wrap">
           <div className="crumbs rise">
-            <Link href="/">首頁</Link> ／ <Link href="/shop">全部商品</Link> ／ 結帳
+            <Link href="/">{t('subhero.crumbHome')}</Link> ／{' '}
+            <Link href="/shop">{t('subhero.crumbShop')}</Link> ／ {t('subhero.crumb')}
           </div>
-          <span className="sh-k rise">Checkout · 結帳</span>
+          <span className="sh-k rise">{t('subhero.k')}</span>
           <h1 className="rise d1" style={{ fontSize: 'clamp(34px,4.4vw,56px)' }}>
-            確認您的<em>訂單</em>
+            {t.rich('subhero.title', richTags)}
           </h1>
         </div>
       </section>
@@ -87,30 +91,33 @@ export default function Checkout() {
           {placed ? (
             <div className="co-done reveal in">
               <div className="co-done-mark">✓</div>
-              <h2>訂單已建立</h2>
-              <p>這是基本架構的模擬下單。實際付款與金流確認，將由外部合作廠商串接後完成。</p>
+              <h2>{t('placed.title')}</h2>
+              <p>{t('placed.p')}</p>
               <div className="pc-row" style={{ justifyContent: 'center' }}>
                 <Link className="btn btn-out" href="/shop">
-                  繼續選購
+                  {t('placed.back')}
                 </Link>
                 <Link className="btn btn-gold" href="/">
-                  回到首頁
+                  {t('placed.home')}
                 </Link>
               </div>
             </div>
           ) : items.length === 0 ? (
             <div className="co-done reveal in">
-              <h2 style={{ marginTop: 0 }}>購物車是空的</h2>
-              <p>尚未加入任何商品。</p>
+              <h2 style={{ marginTop: 0 }}>{t('empty.title')}</h2>
+              <p>{t('empty.sub')}</p>
               <Link className="btn btn-gold" href="/shop">
-                前往選購
+                {t('empty.cta')}
               </Link>
             </div>
           ) : (
             <div className="co-grid">
               <div className="co-left reveal">
                 <h3 className="co-h">
-                  商品明細<small>{items.reduce((n, i) => n + i.qty, 0)} 件</small>
+                  {t('items.title')}
+                  <small>
+                    {totalCount} {t('items.qty')}
+                  </small>
                 </h3>
                 <div className="co-lines">
                   {items.map((it) => (
@@ -128,7 +135,7 @@ export default function Checkout() {
                             onPlus={() => Cart.setQty(it.id, it.qty + 1)}
                           />
                           <button className="cd-remove" onClick={() => Cart.remove(it.id)}>
-                            移除
+                            {t('items.remove')}
                           </button>
                         </div>
                       </div>
@@ -140,20 +147,25 @@ export default function Checkout() {
               </div>
 
               <aside className="co-summary reveal d1">
-                <h3 className="co-h">訂單金額</h3>
+                <h3 className="co-h">{t('summary.title')}</h3>
                 <div className="co-sumrow">
-                  <span>商品小計</span>
+                  <span>{t('summary.subtotal')}</span>
                   <span>{ntd(subtotal)}</span>
                 </div>
                 <div className="co-sumrow">
-                  <span>運費{ship === 0 && <em>（滿 {ntd(SHIP_FREE_OVER)} 免運）</em>}</span>
-                  <span>{ship === 0 ? '免運' : ntd(ship)}</span>
+                  <span>
+                    {t('summary.ship')}
+                    {ship === 0 && (
+                      <em>{t('summary.shipFreeOver', { amount: ntd(SHIP_FREE_OVER) })}</em>
+                    )}
+                  </span>
+                  <span>{ship === 0 ? t('summary.shipFree') : ntd(ship)}</span>
                 </div>
                 <div className="co-sumrow total">
-                  <span>應付總額</span>
+                  <span>{t('summary.total')}</span>
                   <span className="co-total">{ntd(total)}</span>
                 </div>
-                <p className="co-tax">金額已含營業稅</p>
+                <p className="co-tax">{t('summary.tax')}</p>
                 <button
                   className="btn btn-gold co-place"
                   onClick={() => {
@@ -162,10 +174,10 @@ export default function Checkout() {
                     window.scrollTo(0, 0);
                   }}
                 >
-                  確認下單
+                  {t('summary.place')}
                 </button>
                 <Link className="cd-cont" href="/shop">
-                  繼續選購
+                  {t('summary.continue')}
                 </Link>
               </aside>
             </div>

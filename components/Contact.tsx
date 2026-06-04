@@ -1,38 +1,40 @@
 'use client';
-// 聯絡我們 — 洽詢表單 + 品牌生態系外連 + 門市（文案暫內嵌，i18n 留收尾）。原 contact.jsx。
+// 聯絡我們 — 洽詢表單 + 品牌生態系外連 + 門市。原 contact.jsx。
+// i18n 標準分離：文字在 locales/*.json 的 `contact` 命名空間；
+// 圖片（kw/lock）、外連 href、跨語通用聯絡資料在 lib/content/contact.layout.ts（三語共用）。
+import { useTranslations } from 'next-intl';
+import type { ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useReveal, useHashScroll } from '@/lib/reveal';
 import PhImg from '@/components/PhImg';
 import Arw from '@/components/Arw';
+import {
+  CONTACT_LINKS,
+  CONTACT_STORES,
+  CONTACT_DIRECT,
+} from '@/lib/content/contact.layout';
 
-const STORES = [
-  { zh: '花蓮 黃金特色館', en: 'Hualien Gold Gallery', addr: '花蓮 · 觀光門市', kw: 'store,boutique,gold', lock: 71 },
-  { zh: '新北 黃金博物館 食用金文創館', en: 'Gold Museum · Edible Gold Atelier', addr: '新北 瑞芳 · 黃金博物館園區', kw: 'museum,gold,taiwan', lock: 77 },
-];
-
-const LINKS = [
-  { zh: 'GNT 京華堂 技術官網', en: 'Corporate · gnt.com.tw', href: 'http://www.gnt.com.tw' },
-  { zh: '金釀聯盟 黃金酒廠', en: 'Gold Wine · goldinalliance.com', href: 'https://www.goldinalliance.com' },
-  { zh: '黃金博物館門市', en: 'Museum Stores', href: '#stores' },
-];
+const richTags = {
+  em: (c: ReactNode) => <em>{c}</em>,
+};
 
 export default function Contact() {
   useReveal();
   useHashScroll();
+  const t = useTranslations('contact');
+  const formAlert = t('form.alert');
+  const typeOptions = t.raw('form.typeOptions') as string[];
+
   return (
     <>
       <section className="subhero">
         <div className="wrap">
           <div className="crumbs rise">
-            <Link href="/">首頁</Link> ／ 聯絡我們
+            <Link href="/">{t('subhero.crumbHome')}</Link> ／ {t('subhero.crumb')}
           </div>
-          <span className="sh-k rise">Contact · 聯絡我們</span>
-          <h1 className="rise d1">
-            與我們<em>聊聊</em>
-          </h1>
-          <p className="sh-lead rise d2">
-            原料採購、品牌客製、技術洽詢或門市資訊，留下需求，我們將盡快回覆。
-          </p>
+          <span className="sh-k rise">{t('subhero.k')}</span>
+          <h1 className="rise d1">{t.rich('subhero.title', richTags)}</h1>
+          <p className="sh-lead rise d2">{t('subhero.lead')}</p>
         </div>
       </section>
 
@@ -41,63 +43,73 @@ export default function Contact() {
           <div className="ct-grid">
             {/* form */}
             <div className="co-form reveal" style={{ marginTop: 0 }}>
-              <h3 className="co-h">洽詢表單</h3>
+              <h3 className="co-h">{t('form.title')}</h3>
               <label className="co-field">
-                <span>稱呼 / 公司</span>
-                <input type="text" placeholder="您的姓名或公司" />
+                <span>{t('form.nameLabel')}</span>
+                <input type="text" placeholder={t('form.namePh')} />
               </label>
               <label className="co-field">
-                <span>電子郵件</span>
-                <input type="text" placeholder="you@example.com" />
+                <span>{t('form.emailLabel')}</span>
+                <input type="text" placeholder={t('form.emailPh')} />
               </label>
               <label className="co-field">
-                <span>洽詢類型</span>
-                <select defaultValue="食用金原料採購">
-                  <option>食用金原料採購</option>
-                  <option>終端商品 / 禮贈</option>
-                  <option>奈米金 / 奈米銀 配方研究</option>
-                  <option>品牌客製合作</option>
-                  <option>其他</option>
+                <span>{t('form.typeLabel')}</span>
+                <select defaultValue={typeOptions[0]}>
+                  {typeOptions.map((o) => (
+                    <option key={o}>{o}</option>
+                  ))}
                 </select>
               </label>
               <label className="co-field">
-                <span>需求說明</span>
-                <textarea rows={4} placeholder="用途、用量或合作方向"></textarea>
+                <span>{t('form.msgLabel')}</span>
+                <textarea rows={4} placeholder={t('form.msgPh')}></textarea>
               </label>
               <button
                 className="btn btn-gold"
                 style={{ width: '100%', justifyContent: 'center' }}
                 onClick={(e) => {
                   e.preventDefault();
-                  alert('（示意）表單送出將串接客服信箱 / CRM。');
+                  alert(formAlert);
                 }}
               >
-                送出洽詢
+                {t('form.submit')}
               </button>
             </div>
 
             {/* info + ecosystem */}
             <aside className="reveal d1">
               <div className="ct-info">
-                <h3 className="co-h">直接聯繫</h3>
-                <div className="ct-row"><span>電話</span><a href="tel:+886227998866">+886 2 2799 8866</a></div>
-                <div className="ct-row"><span>信箱</span><a href="mailto:info@gnt.com.tw">info@gnt.com.tw</a></div>
-                <div className="ct-row"><span>地址</span><span>台北市內湖區瑞光路 258 巷 52 號</span></div>
-                <div className="ct-row"><span>掛牌</span><span>TWSE 1267 · 京華堂實業</span></div>
+                <h3 className="co-h">{t('direct.title')}</h3>
+                <div className="ct-row">
+                  <span>{t('direct.phone')}</span>
+                  <a href={`tel:${CONTACT_DIRECT.phone.replace(/\s+/g, '')}`}>{CONTACT_DIRECT.phone}</a>
+                </div>
+                <div className="ct-row">
+                  <span>{t('direct.email')}</span>
+                  <a href={`mailto:${CONTACT_DIRECT.email}`}>{CONTACT_DIRECT.email}</a>
+                </div>
+                <div className="ct-row">
+                  <span>{t('direct.addr')}</span>
+                  <span>{t('direct.addrValue')}</span>
+                </div>
+                <div className="ct-row">
+                  <span>{t('direct.listing')}</span>
+                  <span>{t('direct.listingValue')}</span>
+                </div>
               </div>
               <div className="ct-eco">
-                <h3 className="co-h">品牌生態系</h3>
-                {LINKS.map((l) => (
+                <h3 className="co-h">{t('ecosystem.title')}</h3>
+                {CONTACT_LINKS.map((l) => (
                   <a
                     className="ct-link"
-                    key={l.zh}
+                    key={l.key}
                     href={l.href}
                     target={l.href.startsWith('http') ? '_blank' : undefined}
                     rel="noopener"
                   >
                     <span>
-                      <b>{l.zh}</b>
-                      <small>{l.en}</small>
+                      <b>{t(`ecosystem.links.${l.key}.zh`)}</b>
+                      <small>{t(`ecosystem.links.${l.key}.en`)}</small>
                     </span>
                     <Arw />
                   </a>
@@ -112,21 +124,27 @@ export default function Contact() {
       <section className="sec panel" id="stores" style={{ scrollMarginTop: '90px' }}>
         <div className="wrap">
           <div className="sec-head reveal" style={{ marginBottom: '40px' }}>
-            <span className="kicker">Stores · 門市據點</span>
-            <h2 style={{ marginTop: '18px' }}>黃金博物館門市，眼見為憑</h2>
-            <p>實體門市親眼確認、親手感受——真金不怕火煉。</p>
+            <span className="kicker">{t('stores.kicker')}</span>
+            <h2 style={{ marginTop: '18px' }}>{t('stores.title')}</h2>
+            <p>{t('stores.sub')}</p>
           </div>
           <div className="audience">
-            {STORES.map((s, i) => (
-              <div className={'audcard reveal d' + i} key={s.zh} style={{ padding: 0, overflow: 'hidden' }}>
+            {CONTACT_STORES.map((s, i) => (
+              <div
+                className={'audcard reveal d' + i}
+                key={s.key}
+                style={{ padding: 0, overflow: 'hidden' }}
+              >
                 <div className="ph" style={{ height: '240px' }}>
                   <PhImg kw={s.kw} lock={s.lock} />
-                  <span className="cap">{s.en}</span>
+                  <span className="cap">{t(`stores.items.${s.key}.en`)}</span>
                 </div>
                 <div style={{ padding: '32px 40px 38px' }}>
-                  <span className="au-k">{s.en}</span>
-                  <h3 style={{ fontSize: '24px', margin: '10px 0 6px' }}>{s.zh}</h3>
-                  <p style={{ marginBottom: 0 }}>{s.addr}</p>
+                  <span className="au-k">{t(`stores.items.${s.key}.en`)}</span>
+                  <h3 style={{ fontSize: '24px', margin: '10px 0 6px' }}>
+                    {t(`stores.items.${s.key}.zh`)}
+                  </h3>
+                  <p style={{ marginBottom: 0 }}>{t(`stores.items.${s.key}.addr`)}</p>
                 </div>
               </div>
             ))}

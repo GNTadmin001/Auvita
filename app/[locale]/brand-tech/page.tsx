@@ -4,7 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import BrandTech from '@/components/BrandTech';
 import Faq from '@/components/Faq';
-import { FAQ_ITEMS } from '@/lib/faq';
+import { getFaqItems } from '@/lib/faq';
 import { buildPageMetadata, faqJsonLd } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -17,11 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const faqItems = await getFaqItems(locale);
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQ_ITEMS)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqItems)) }}
       />
       <SiteHeader active="brand" />
       <BrandTech />

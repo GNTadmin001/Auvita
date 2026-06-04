@@ -1,5 +1,7 @@
 'use client';
 // header 購物車按鈕 + 即時徽章。原 cart.jsx 的 BagIcon + CartButton。
+// i18n 標準分離：aria-label 在 locales/*.json 的 `cart.bagLabel`。
+import { useTranslations } from 'next-intl';
 import { useCart } from '@/lib/cart';
 
 export function BagIcon() {
@@ -12,12 +14,13 @@ export function BagIcon() {
 }
 
 export default function CartButton() {
+  const t = useTranslations('cart');
   const items = useCart();
   const count = items.reduce((n, i) => n + i.qty, 0);
   return (
     <button
       className="cart-btn"
-      aria-label="購物車"
+      aria-label={t('bagLabel')}
       onClick={() => window.dispatchEvent(new CustomEvent('cart:open'))}
     >
       <BagIcon />

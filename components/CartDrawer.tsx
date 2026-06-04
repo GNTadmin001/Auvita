@@ -1,7 +1,9 @@
 'use client';
 // 滑出式購物車抽屜。原 cart.jsx 的 QtyStep + CartDrawer。
 // 監聽 'cart:open' 事件開啟；連結 shop.html/checkout.html → next-intl Link。
+// i18n 標準分離：文字在 locales/*.json 的 `cart.drawer` 命名空間。
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Cart, ntd, useCart } from '@/lib/cart';
 import PhImg from '@/components/PhImg';
@@ -16,13 +18,14 @@ export function QtyStep({
   onMinus: () => void;
   onPlus: () => void;
 }) {
+  const t = useTranslations('cart.drawer');
   return (
     <div className="qstep">
-      <button onClick={onMinus} aria-label="減少">
+      <button onClick={onMinus} aria-label={t('minusLabel')}>
         −
       </button>
       <span>{value}</span>
-      <button onClick={onPlus} aria-label="增加">
+      <button onClick={onPlus} aria-label={t('plusLabel')}>
         +
       </button>
     </div>
@@ -30,6 +33,7 @@ export function QtyStep({
 }
 
 export default function CartDrawer() {
+  const t = useTranslations('cart.drawer');
   const items = useCart();
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -51,9 +55,9 @@ export default function CartDrawer() {
       <aside className={'cart-drawer' + (open ? ' on' : '')} aria-hidden={!open}>
         <div className="cd-head">
           <span className="cd-title">
-            購物車<small>YOUR BAG</small>
+            {t('title')}<small>{t('titleEn')}</small>
           </span>
-          <button className="cd-close" onClick={() => setOpen(false)} aria-label="關閉">
+          <button className="cd-close" onClick={() => setOpen(false)} aria-label={t('closeLabel')}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
               <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
             </svg>
@@ -63,9 +67,9 @@ export default function CartDrawer() {
         {items.length === 0 ? (
           <div className="cd-empty">
             <BagIcon />
-            <p>購物車是空的</p>
+            <p>{t('empty')}</p>
             <Link className="btn btn-out" href="/shop">
-              前往選購
+              {t('shop')}
             </Link>
           </div>
         ) : (
@@ -87,7 +91,7 @@ export default function CartDrawer() {
                         onPlus={() => Cart.setQty(it.id, it.qty + 1)}
                       />
                       <button className="cd-remove" onClick={() => Cart.remove(it.id)}>
-                        移除
+                        {t('remove')}
                       </button>
                     </div>
                   </div>
@@ -97,15 +101,15 @@ export default function CartDrawer() {
             </div>
             <div className="cd-foot">
               <div className="cd-sub">
-                <span>小計</span>
+                <span>{t('subtotal')}</span>
                 <span className="cd-sum">{ntd(total)}</span>
               </div>
-              <p className="cd-note">運費與稅額於結帳頁計算 · 付款由外部金流串接</p>
+              <p className="cd-note">{t('note')}</p>
               <Link className="btn btn-gold cd-checkout" href="/checkout">
-                前往結帳
+                {t('checkout')}
               </Link>
               <Link className="cd-cont" href="/shop">
-                繼續選購
+                {t('continue')}
               </Link>
             </div>
           </>

@@ -1,17 +1,26 @@
-// FAQ 區：純 Server Component（無 hook、無互動），用 <details>/<summary> 提供原生展開。
+// FAQ 區：Server Component（無 hook、無互動），用 <details>/<summary> 提供原生展開。
 // 樣式類別沿用 brand-tech / shop 的 .sec-tight / .wrap / reveal 等既有風格，避免新增 CSS。
-import { FAQ_ITEMS } from '@/lib/faq';
+// i18n 標準分離：文字（含 q/a 陣列）在 locales/*.json 的 `faq` 命名空間。
+import { useTranslations } from 'next-intl';
+import type { ReactNode } from 'react';
+import type { FaqItem } from '@/lib/faq';
+
+const richTags = {
+  em: (c: ReactNode) => <em>{c}</em>,
+};
 
 export default function Faq() {
+  const t = useTranslations('faq');
+  const items = t.raw('items') as FaqItem[];
   return (
     <section className="sec-tight" id="faq">
       <div className="wrap">
-        <span className="sh-k">FAQ · 常見問題</span>
+        <span className="sh-k">{t('kicker')}</span>
         <h2 className="d1" style={{ marginTop: 12 }}>
-          關於汽化金，<em>你可能想知道的</em>
+          {t.rich('title', richTags)}
         </h2>
         <div className="faq-list" style={{ marginTop: 28 }}>
-          {FAQ_ITEMS.map((item, i) => (
+          {items.map((item, i) => (
             <details
               key={i}
               className="faq-item"
@@ -32,7 +41,9 @@ export default function Faq() {
                 }}
               >
                 <span>{item.q}</span>
-                <span aria-hidden style={{ opacity: 0.6, fontSize: '1.2rem', lineHeight: 1 }}>＋</span>
+                <span aria-hidden style={{ opacity: 0.6, fontSize: '1.2rem', lineHeight: 1 }}>
+                  ＋
+                </span>
               </summary>
               <p
                 style={{
