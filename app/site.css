@@ -433,7 +433,10 @@
   .exits,.trust,.paths,.audience,.scene,.certgrid,.proc,.dstats,.site-foot .sf-top{grid-template-columns:1fr;}
   .exit{min-height:420px;border-right:0;border-bottom:1px solid rgba(0,0,0,.4);}
   .scene.flip{direction:ltr;}
-  .scene .ph{min-height:280px;}
+  .scene .ph{min-height:0;aspect-ratio:16/10;}
+  .scene .sc-body{padding:34px 24px;}
+  .scene .sc-body h3{font-size:26px;}
+  .scene .sc-body p{font-size:14px;line-height:1.85;}
   .dstat{border-right:0;border-bottom:1px solid var(--k-line-soft);}
   .procstep::before{margin-bottom:10px;}
   .site-foot .sf-top{gap:32px;}

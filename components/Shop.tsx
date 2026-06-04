@@ -8,7 +8,9 @@ import { Cart, ntd } from '@/lib/cart';
 import { PRODUCTS, FAMILIES, GROUPS, type Product } from '@/lib/products';
 import PhImg from '@/components/PhImg';
 
-function ShopCard({ p, flash }: { p: Product; flash?: boolean }) {
+// shown：深連結目標卡。由 React 掌控「已顯示」狀態（in + reveal-instant），
+// 而非用 classList 手動加 —— 否則 flash 在 2.2s 清除時 React 重寫 class 會把手動加的洗掉。
+function ShopCard({ p, flash, shown }: { p: Product; flash?: boolean; shown?: boolean }) {
   const [added, setAdded] = useState(false);
   const add = () => {
     Cart.add({ id: p.id, zh: p.zh, en: p.en, family: p.family, price: p.price, kw: p.kw, lock: p.lock });
@@ -16,9 +18,13 @@ function ShopCard({ p, flash }: { p: Product; flash?: boolean }) {
     setTimeout(() => setAdded(false), 1400);
   };
   return (
-    <div className={'prod reveal' + (flash ? ' flash' : '')} id={p.id} style={{ scrollMarginTop: '110px' }}>
+    <div
+      className={'prod reveal' + (shown ? ' in reveal-instant' : '') + (flash ? ' flash' : '')}
+      id={p.id}
+      style={{ scrollMarginTop: '110px' }}
+    >
       <Link className="ph" href="/product">
-        <PhImg kw={p.kw} lock={p.lock} />
+        <PhImg kw={p.kw} lock={p.lock} eager={shown} />
         <span className="cap">{p.en}</span>
       </Link>
       <div className="pin">
@@ -45,6 +51,8 @@ function ShopCard({ p, flash }: { p: Product; flash?: boolean }) {
 export default function Shop() {
   const [filter, setFilter] = useState('all');
   const [highlightId, setHighlightId] = useState('');
+  // pinned：深連結造訪過的商品 id。永久標記為已顯示，避免 highlightId 清除後 React 覆寫 class。
+  const [pinned, setPinned] = useState<string[]>([]);
   useReveal();
 
   // 載入 / hash 變動時解析錨點：
@@ -64,12 +72,15 @@ export default function Shop() {
       if (!prod) return;
       setFilter(prod.fam);
       setHighlightId(h);
+      setPinned((arr) => (arr.includes(h) ? arr : [...arr, h]));
       // 雙 rAF：等 React commit + 該 frame 繪製，DOM 確定掛好後再 scroll；
-      // scroll 前強制把所有 .reveal 立刻顯示（否則 reveal opacity 0→1 的 1.1s
-      // transition 會疊在 smooth scroll 上，視覺像「圖片消失 2 秒再出現」）。
+      // scroll 前對所有 .reveal 同時加 .in 與 .reveal-instant：.in 設終點狀態、
+      // .reveal-instant 直接關掉 1.1s transition，元素「瞬間實心」而非「開始播放淡入」，
+      // 否則淡入會疊在 smooth scroll 上，視覺像「整塊消失 2 秒再出現」。
+      // 目標卡的圖另由 eager={flash} 提前載入（lazy 圖在畫面外不會預抓）。
       const r1 = requestAnimationFrame(() => {
         const r2 = requestAnimationFrame(() => {
-          document.querySelectorAll('.reveal').forEach((e) => e.classList.add('in'));
+          document.querySelectorAll('.reveal').forEach((e) => e.classList.add('in', 'reveal-instant'));
           document.getElementById(h)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
         rafs.push(r2);
@@ -138,7 +149,7 @@ export default function Shop() {
               </div>
               <div className="prodgrid cols3">
                 {PRODUCTS.filter((p) => p.fam === g.key).map((p) => (
-                  <ShopCard key={p.id} p={p} flash={highlightId === p.id} />
+                  <ShopCard key={p.id} p={p} flash={highlightId === p.id} shown={pinned.includes(p.id)} />
                 ))}
               </div>
             </div>
