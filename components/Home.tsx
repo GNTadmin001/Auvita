@@ -4,12 +4,16 @@
 // i18n 標準分離：文字在 locales/*.json 的 `home` 命名空間（含 t.rich/t.raw）；
 // 圖片 kw/lock 與 hot 旗標在 lib/content/home.layout.ts（三語共用、與 items 順序對齊）。
 import { useEffect, type ReactNode } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { IMG } from '@/lib/img';
 import { useReveal } from '@/lib/reveal';
 import Marquee from '@/components/Marquee';
 import GoldDust from '@/components/GoldDust';
+import PhImg from '@/components/PhImg';
+import activeData from '@/data/promotions/active.json';
+import type { Promotion, SupportedLocale } from '@/types/promotion';
+import { NEWS_PLACEHOLDERS } from '@/lib/content/news.layout';
 import {
   HOME_HERO_IMG,
   HOME_ORIGINS_TILES,
@@ -17,6 +21,8 @@ import {
   HOME_SHOP_TEASER_IMG,
   HOME_GIFTS_IMG,
 } from '@/lib/content/home.layout';
+
+const PROMOS = activeData as unknown as Promotion[];
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,
@@ -167,6 +173,80 @@ function Origins() {
             {t('readMore')}
           </a>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function NewsCarousel() {
+  const t = useTranslations('news');
+  const locale = useLocale();
+  const loc = locale as SupportedLocale;
+  const hasPromos = PROMOS.length > 0;
+  return (
+    <section className="sec-tight" id="news">
+      <div className="wrap">
+        <div className="sec-head center" style={{ marginBottom: '48px' }}>
+          <span className="kicker reveal">{t('subhero.k')}</span>
+          <h2 className="reveal d1 ed-title">{t.rich('subhero.title', richTags)}</h2>
+        </div>
+        {hasPromos ? (
+          <div className="prodgrid cols3">
+            {PROMOS.map((p, i) => {
+              const c = p[loc] ?? p['zh-TW'];
+              const inner = (
+                <>
+                  <div className="ph">
+                    <img className="ph-img" src={p.image} alt={c.title} loading="lazy" />
+                    <span className="cap">{t('promo.cap')}</span>
+                  </div>
+                  <div className="pin">
+                    <span className="tag">{t('promo.tag')}</span>
+                    <h4>{c.title}</h4>
+                    <p className="desc">{c.description}</p>
+                  </div>
+                </>
+              );
+              return (
+                <div className={'prod reveal d' + (i % 3)} key={p.id}>
+                  {p.link ? (
+                    <a href={p.link} target="_blank" rel="noopener noreferrer">
+                      {inner}
+                    </a>
+                  ) : (
+                    inner
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <>
+            <div className="prodgrid cols3">
+              {NEWS_PLACEHOLDERS.map((p, i) => (
+                <div className={'prod reveal d' + (i % 3)} key={p.key}>
+                  <div className="ph">
+                    <PhImg kw={p.kw} lock={p.lock} />
+                    <span className="cap">{t(`placeholder.${p.key}.tag`)}</span>
+                  </div>
+                  <div className="pin">
+                    <span className="tag">
+                      {t(`placeholder.${p.key}.tag`)} {t('placeholder.tagSuffix')}
+                    </span>
+                    <h4>{t(`placeholder.${p.key}.zh`)}</h4>
+                    <p className="desc">{t('placeholder.desc')}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="ph-banner reveal">
+              <p>{t('banner.text')}</p>
+              <Link className="btn btn-out" href="/contact">
+                {t('banner.cta')}
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
@@ -400,6 +480,7 @@ export default function Home() {
       <Hero />
       <Marquee />
       <Origins />
+      <NewsCarousel />
       <Scenes />
       <BrandSymbol />
       <ShopTeaser />
