@@ -22,3 +22,22 @@
 .head-cta .lang .lang-sep {
   opacity: 0.4;
 }
+
+/* Stage 2D：applications 場景 → /shop 商品深連結。
+   場景卡片底部的「選購對應商品」CTA；/shop 被深連時目標卡片短暫高亮。 */
+.scene .sc-cta {
+  align-self: flex-start;
+  margin-top: 26px;
+}
+@keyframes auvita-flash {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0);
+  }
+  30% {
+    box-shadow: 0 0 0 3px var(--k-gold);
+  }
+}
+.prod.flash {
+  animation: auvita-flash 1.8s ease;
+}

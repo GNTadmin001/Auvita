@@ -8,7 +8,7 @@ import { Cart, ntd } from '@/lib/cart';
 import { PRODUCTS, FAMILIES, GROUPS, type Product } from '@/lib/products';
 import PhImg from '@/components/PhImg';
 
-function ShopCard({ p }: { p: Product }) {
+function ShopCard({ p, flash }: { p: Product; flash?: boolean }) {
   const [added, setAdded] = useState(false);
   const add = () => {
     Cart.add({ id: p.id, zh: p.zh, en: p.en, family: p.family, price: p.price, kw: p.kw, lock: p.lock });
@@ -16,7 +16,7 @@ function ShopCard({ p }: { p: Product }) {
     setTimeout(() => setAdded(false), 1400);
   };
   return (
-    <div className="prod reveal">
+    <div className={'prod reveal' + (flash ? ' flash' : '')} id={p.id} style={{ scrollMarginTop: '110px' }}>
       <Link className="ph" href="/product">
         <PhImg kw={p.kw} lock={p.lock} />
         <span className="cap">{p.en}</span>
@@ -44,12 +44,40 @@ function ShopCard({ p }: { p: Product }) {
 
 export default function Shop() {
   const [filter, setFilter] = useState('all');
+  const [highlightId, setHighlightId] = useState('');
   useReveal();
 
-  // 載入時若網址帶 #foil 等分類錨點，套用為初始篩選。
+  // 載入 / hash 變動時解析錨點：
+  //   #foil 等家族 key → 切該家族篩選；
+  //   #foil-wine 等商品 id → 切到該商品所屬家族，捲動定位並短暫高亮該卡。
   useEffect(() => {
-    const h = (window.location.hash || '').replace('#', '');
-    if (FAMILIES.some((f) => f.key === h)) setFilter(h);
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const applyHash = () => {
+      const h = (window.location.hash || '').replace('#', '');
+      if (!h) return;
+      if (FAMILIES.some((f) => f.key === h)) {
+        setFilter(h);
+        return;
+      }
+      const prod = PRODUCTS.find((p) => p.id === h);
+      if (prod) {
+        setFilter(prod.fam);
+        setHighlightId(h);
+        // 等 filter 套用、卡片掛上後再捲動定位（避開 React render 競態）。
+        timers.push(
+          setTimeout(() => {
+            document.getElementById(h)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 120),
+        );
+        timers.push(setTimeout(() => setHighlightId(''), 2200));
+      }
+    };
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+    return () => {
+      window.removeEventListener('hashchange', applyHash);
+      timers.forEach(clearTimeout);
+    };
   }, []);
 
   // 篩選變動後，剛掛上的卡片重跑 reveal（觸發 useReveal 的 scroll listener）。
@@ -104,7 +132,7 @@ export default function Shop() {
               </div>
               <div className="prodgrid cols3">
                 {PRODUCTS.filter((p) => p.fam === g.key).map((p) => (
-                  <ShopCard key={p.id} p={p} />
+                  <ShopCard key={p.id} p={p} flash={highlightId === p.id} />
                 ))}
               </div>
             </div>

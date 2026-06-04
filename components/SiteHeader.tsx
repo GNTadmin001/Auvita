@@ -116,6 +116,9 @@ export default function SiteHeader({
               品牌與技術
             </Link>
             <NavGroup label="產品應用" items={APP_MENU} on={a === 'apps'} />
+            <Link href="/shop" className={a === 'shop' ? 'on' : ''}>
+              選購
+            </Link>
             <Link href="/news" className={a === 'news' ? 'on' : ''}>
               最新活動
             </Link>
