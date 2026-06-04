@@ -222,17 +222,18 @@
       "title": "品牌生態系",
       "links": {
         "corp": { "zh": "GNT 京華堂 技術官網", "en": "Corporate · gnt.com.tw" },
-        "wine": { "zh": "金釀聯盟 黃金酒廠", "en": "Gold Wine · goldinalliance.com" },
-        "museum": { "zh": "黃金博物館門市", "en": "Museum Stores" }
+        "wine": { "zh": "金釀聯盟 黃金酒廠", "en": "Gold Wine · goldinalliance.com" }
       }
     },
     "stores": {
       "kicker": "Stores · 門市據點",
       "title": "黃金博物館門市，眼見為憑",
       "sub": "實體門市親眼確認、親手感受——真金不怕火煉。",
+      "phone": "Tel",
+      "lineScan": "Scan to chat on LINE",
       "items": {
-        "hualien": { "zh": "花蓮 黃金特色館", "en": "Hualien Gold Gallery", "addr": "花蓮 · 觀光門市" },
-        "museum": { "zh": "新北 黃金博物館 食用金文創館", "en": "Gold Museum · Edible Gold Atelier", "addr": "新北 瑞芳 · 黃金博物館園區" }
+        "hualien": { "zh": "花蓮 黃金特色館", "en": "Hualien Gold Gallery", "addr": "花蓮縣花蓮市美工路 6 號（花蓮酒廠黃金酒鄉）" },
+        "museum": { "zh": "新北 黃金博物館 食用金文創館", "en": "Gold Museum · Edible Gold Atelier", "addr": "新北市瑞芳區金光路 55 號（黃金博物館園區）" }
       }
     }
   },

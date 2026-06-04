@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useReveal, useHashScroll } from '@/lib/reveal';
-import PhImg from '@/components/PhImg';
 import Arw from '@/components/Arw';
 import {
   CONTACT_LINKS,
@@ -135,16 +134,35 @@ export default function Contact() {
                 key={s.key}
                 style={{ padding: 0, overflow: 'hidden' }}
               >
-                <div className="ph" style={{ height: '240px' }}>
-                  <PhImg kw={s.kw} lock={s.lock} />
-                  <span className="cap">{t(`stores.items.${s.key}.en`)}</span>
-                </div>
+                <a href={s.href} target="_blank" rel="noopener" style={{ display: 'block' }}>
+                  <div className="ph" style={{ height: '240px' }}>
+                    <img className="ph-img" src={s.img} alt={t(`stores.items.${s.key}.zh`)} loading="lazy" />
+                    <span className="cap">{t(`stores.items.${s.key}.en`)}</span>
+                  </div>
+                </a>
                 <div style={{ padding: '32px 40px 38px' }}>
                   <span className="au-k">{t(`stores.items.${s.key}.en`)}</span>
                   <h3 style={{ fontSize: '24px', margin: '10px 0 6px' }}>
                     {t(`stores.items.${s.key}.zh`)}
                   </h3>
-                  <p style={{ marginBottom: 0 }}>{t(`stores.items.${s.key}.addr`)}</p>
+                  <p style={{ marginBottom: '12px' }}>{t(`stores.items.${s.key}.addr`)}</p>
+                  <p style={{ marginBottom: '16px' }}>
+                    <a href={`tel:${s.phone.replace(/[-\s]/g, '')}`} style={{ fontWeight: 600 }}>
+                      {t('stores.phone')} {s.phone}
+                    </a>
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <a href={s.lineHref} target="_blank" rel="noopener">
+                      <img
+                        src={s.lineQr}
+                        alt="LINE QR"
+                        style={{ width: '320px', height: '320px', borderRadius: '8px', objectFit: 'cover', display: 'block' }}
+                      />
+                    </a>
+                    <span style={{ fontSize: '13px', color: 'var(--c-muted, #888)' }}>
+                      {t('stores.lineScan')}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
