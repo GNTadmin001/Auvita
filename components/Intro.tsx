@@ -37,7 +37,7 @@ export default function Intro() {
           <img
             className="cover-img"
             alt=""
-            src={IMG('champagne,gold', 27, 1920, 1280)}
+            src="/images/intro/hero.jpg"
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).remove();
             }}

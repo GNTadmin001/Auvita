@@ -21,6 +21,12 @@ function emphP(t: string) {
 
 const THUMBS = ['正面 · 禮盒', '金箔 · 微距', '情境 · 香檳', '證書 · SGS'];
 const THUMB_KW = ['giftbox', 'goldleaf', 'champagne', 'document'];
+const THUMB_IMGS = [
+  '/images/金純.jpg',
+  '/images/金純.jpg',
+  '/images/金純.jpg',
+  '/images/金純.jpg',
+];
 const SPECS: [string, string][] = [
   ['純度 Purity', '9999 (≥99.9%)'],
   ['薄度 Thickness', '100 nm'],
@@ -48,6 +54,12 @@ const RELATED: [string, string, string][] = [
   ['Au Foil · 100nm', '金箔_9999_', 'goldleaf'],
   ['Brew Gold', '金釀_黃金酒_', 'whisky'],
 ];
+const RELATED_IMGS = [
+  '/images/4號金粉.png',
+  '/images/4號金粉.png',
+  '/images/金純.jpg',
+  '',
+];
 
 export default function Product() {
   const [thumb, setThumb] = useState(0);
@@ -66,7 +78,7 @@ export default function Product() {
               <img
                 className="ph-img"
                 alt=""
-                src={IMG(THUMB_KW[thumb], 80 + thumb, 1100, 1100)}
+                src={THUMB_IMGS[thumb] || IMG(THUMB_KW[thumb], 80 + thumb, 1100, 1100)}
                 onError={(e) => {
                   e.currentTarget.remove();
                 }}
@@ -83,7 +95,7 @@ export default function Product() {
                   <img
                     className="ph-img"
                     alt=""
-                    src={IMG(THUMB_KW[i], 80 + i, 320, 320)}
+                    src={THUMB_IMGS[i] || IMG(THUMB_KW[i], 80 + i, 320, 320)}
                     onError={(e) => {
                       e.currentTarget.remove();
                     }}
@@ -256,7 +268,7 @@ export default function Product() {
                   <img
                     className="ph-img"
                     alt=""
-                    src={IMG(kw, 90 + i, 720, 660)}
+                    src={RELATED_IMGS[i] || IMG(kw, 90 + i, 720, 660)}
                     onError={(e) => {
                       e.currentTarget.remove();
                     }}

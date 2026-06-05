@@ -4,4 +4,5 @@
 export const GOLD_HISTORY_MUSEUM_IMG = {
   kw: 'goldmine,mountain,heritage',
   lock: 73,
+  img: '/images/gold-history/museum.jpg',
 };

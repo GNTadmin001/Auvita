@@ -24,7 +24,7 @@ function ShopCard({ p, flash, shown }: { p: Product; flash?: boolean; shown?: bo
       style={{ scrollMarginTop: '110px' }}
     >
       <Link className="ph" href="/product">
-        <PhImg kw={p.kw} lock={p.lock} eager={shown} />
+        <PhImg kw={p.kw} lock={p.lock} eager={shown} src={p.img} />
         <span className="cap">{p.en}</span>
       </Link>
       <div className="pin">
@@ -37,6 +37,10 @@ function ShopCard({ p, flash, shown }: { p: Product; flash?: boolean; shown?: bo
             <Link className="add-btn ghost" href="/contact">
               洽詢
             </Link>
+          ) : p.noOnline ? (
+            <span className="add-btn ghost" style={{ cursor: 'default', opacity: 0.55 }}>
+              無法網路販售
+            </span>
           ) : (
             <button className={'add-btn' + (added ? ' ok' : '')} onClick={add}>
               {added ? '已加入 ✓' : '加入購物車'}

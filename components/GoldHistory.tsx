@@ -55,7 +55,7 @@ export default function GoldHistory() {
         <div className="wrap">
           <div className="origins">
             <div className="ph reveal">
-              <PhImg kw={GOLD_HISTORY_MUSEUM_IMG.kw} lock={GOLD_HISTORY_MUSEUM_IMG.lock} />
+              <PhImg kw={GOLD_HISTORY_MUSEUM_IMG.kw} lock={GOLD_HISTORY_MUSEUM_IMG.lock} src={GOLD_HISTORY_MUSEUM_IMG.img} />
               <span className="cap">{t('museum.cap')}</span>
             </div>
             <div className="body reveal d1">

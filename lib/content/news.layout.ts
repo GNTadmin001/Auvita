@@ -6,10 +6,11 @@ export type NewsPlaceholder = {
   key: string; // 對應 locale news.placeholder.<key>.{tag,zh}
   kw: string;
   lock: number;
+  img: string;
 };
 
 export const NEWS_PLACEHOLDERS: NewsPlaceholder[] = [
-  { key: 'event', kw: 'event,gold,gallery', lock: 31 },
-  { key: 'newitem', kw: 'luxury,gold,product', lock: 36 },
-  { key: 'store', kw: 'store,museum,gold', lock: 39 },
+  { key: 'event',   kw: 'event,gold,gallery',   lock: 31, img: '/images/home/news-1.jpg' },
+  { key: 'newitem', kw: 'luxury,gold,product',  lock: 36, img: '/images/home/news-2.jpg' },
+  { key: 'store',   kw: 'store,museum,gold',    lock: 39, img: '/images/home/news-3.jpg' },
 ];

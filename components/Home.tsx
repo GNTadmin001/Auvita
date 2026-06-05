@@ -18,8 +18,6 @@ import {
   HOME_HERO_IMG,
   HOME_ORIGINS_TILES,
   HOME_SCENES_IMG,
-  HOME_SHOP_TEASER_IMG,
-  HOME_GIFTS_IMG,
 } from '@/lib/content/home.layout';
 
 const PROMOS = activeData as unknown as Promotion[];
@@ -79,7 +77,7 @@ function Hero() {
         <img
           className="ph-img"
           alt=""
-          src={IMG(HOME_HERO_IMG.kw, HOME_HERO_IMG.lock, 1920, 1280)}
+          src={HOME_HERO_IMG.img || IMG(HOME_HERO_IMG.kw, HOME_HERO_IMG.lock, 1920, 1280)}
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).remove();
           }}
@@ -146,7 +144,7 @@ function Origins() {
               <div className="pt-media">
                 <img
                   alt=""
-                  src={IMG(tile.img.kw, tile.img.lock, 900, 1300)}
+                  src={tile.img.img || IMG(tile.img.kw, tile.img.lock, 900, 1300)}
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).remove();
                   }}
@@ -226,7 +224,7 @@ function NewsCarousel() {
               {NEWS_PLACEHOLDERS.map((p, i) => (
                 <div className={'prod reveal d' + (i % 3)} key={p.key}>
                   <div className="ph">
-                    <PhImg kw={p.kw} lock={p.lock} />
+                    <PhImg kw={p.kw} lock={p.lock} src={p.img} />
                     <span className="cap">{t(`placeholder.${p.key}.tag`)}</span>
                   </div>
                   <div className="pin">
@@ -274,7 +272,7 @@ function Scenes() {
                   <img
                     className="ph-img"
                     alt=""
-                    src={IMG(img.kw, 30 + i, 760, 900)}
+                    src={img.img || IMG(img.kw, 30 + i, 760, 900)}
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).remove();
                     }}
@@ -332,122 +330,6 @@ function BrandSymbol() {
   );
 }
 
-type ShopItem = { tag: string; name: string; desc: string };
-
-function ShopTeaser() {
-  const t = useTranslations('home.shopTeaser');
-  const items = t.raw('items') as ShopItem[];
-  const ask = t('ask');
-  return (
-    <section className="sec panel" id="shop">
-      <div className="wrap">
-        <div className="sec-head center" style={{ marginBottom: '58px' }}>
-          <span className="kicker reveal">{t('kicker')}</span>
-          <h2 className="reveal d1 ed-title">{t.rich('title', richTags)}</h2>
-          <p className="reveal d2">{t('sub')}</p>
-        </div>
-        <div className="prodgrid">
-          {items.map((it, i) => {
-            const img = HOME_SHOP_TEASER_IMG[i] ?? HOME_SHOP_TEASER_IMG[0];
-            return (
-              <Link className={'prod reveal d' + ((i % 3) + 1)} href="/product" key={i}>
-                <div className="ph">
-                  <img
-                    className="ph-img"
-                    alt=""
-                    src={IMG(img.kw, 40 + i, 720, 720)}
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).remove();
-                    }}
-                  />
-                  <span className="cap">{it.tag} imagery</span>
-                </div>
-                <div className="pin">
-                  <span className={'tag' + (img.hot ? ' hot' : '')}>{it.tag}</span>
-                  <h4>{fmt(it.name)}</h4>
-                  <p className="desc">{it.desc}</p>
-                  <div className="pfoot">
-                    <span className="ask">{ask}</span>
-                    <span className="arrow">→</span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-type GiftItem = { gl: string; en: string; zh: string; desc: string };
-
-function Gifts() {
-  const t = useTranslations('home.gifts');
-  const items = t.raw('items') as GiftItem[];
-  return (
-    <section className="sec" id="gifts">
-      <div className="wrap">
-        <div className="sec-head center" style={{ marginBottom: '58px' }}>
-          <span className="kicker reveal">{t('kicker')}</span>
-          <h2 className="reveal d1 ed-title">{t.rich('title', richTags)}</h2>
-          <p className="reveal d2">{t('sub')}</p>
-        </div>
-        <div className="appgrid">
-          {items.map((it, i) => {
-            const img = HOME_GIFTS_IMG[i] ?? HOME_GIFTS_IMG[0];
-            return (
-              <article
-                className={'appcard reveal d' + ((i % 3) + 1)}
-                key={it.zh}
-                style={{ height: '300px' }}
-              >
-                <div className="ph">
-                  <img
-                    className="ph-img"
-                    alt=""
-                    src={IMG(img.kw, 50 + i, 760, 760)}
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).remove();
-                    }}
-                  />
-                  <span className="cap">{it.en}</span>
-                </div>
-                <div className="meta">
-                  <div className="k">{it.en}</div>
-                  <h4 style={{ fontSize: '28px' }}>
-                    {it.zh}
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-serif)',
-                        color: 'var(--k-gold-lt)',
-                        marginLeft: '10px',
-                        fontSize: '20px',
-                      }}
-                    >
-                      {it.gl}
-                    </span>
-                  </h4>
-                  <p
-                    style={{
-                      fontSize: '12.5px',
-                      color: 'var(--k-dim)',
-                      lineHeight: 1.7,
-                      fontWeight: 300,
-                    }}
-                  >
-                    {it.desc}
-                  </p>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function CTA() {
   const t = useTranslations('home.cta');
   return (
@@ -483,8 +365,6 @@ export default function Home() {
       <NewsCarousel />
       <Scenes />
       <BrandSymbol />
-      <ShopTeaser />
-      <Gifts />
       <CTA />
     </>
   );

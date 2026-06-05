@@ -66,7 +66,7 @@ export default function BrandTech() {
         <div className="wrap">
           <div className="origins">
             <div className="ph reveal">
-              <PhImg kw={BRAND_TECH_HERITAGE_IMG.kw} lock={BRAND_TECH_HERITAGE_IMG.lock} />
+              <PhImg kw={BRAND_TECH_HERITAGE_IMG.kw} lock={BRAND_TECH_HERITAGE_IMG.lock} src={BRAND_TECH_HERITAGE_IMG.img} />
               <span className="cap">{t('heritage.cap')}</span>
             </div>
             <div className="body reveal d1">

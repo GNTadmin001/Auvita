@@ -24,17 +24,20 @@ export const APPLICATIONS_FAMS: FamLayout[] = [
     key: 'foil',
     id: 'foil',
     scenes: [
-      { key: 'cosmetics', flip: false, kw: 'cosmetics,gold,beauty', lock: 61, ctaHref: '/shop#foil-soap' },
+      {
+        key: 'cosmetics',
+        flip: false,
+        kw: 'cosmetics,gold,beauty',
+        lock: 61,
+        images: ['/images/applications/cosmetics.jpg'],
+        ctaHref: '/shop#foil-soap',
+      },
       {
         key: 'food',
         flip: true,
         kw: 'fine-dining,dessert,gold',
         lock: 22,
-        images: [
-          '/images/applications/foil-food-1.jpg',
-          '/images/applications/foil-food-2.jpg',
-          '/images/applications/foil-food-3.jpg',
-        ],
+        images: ['/images/applications/foil-food-1.jpg'],
         ctaHref: '/shop#foil-leaf',
       },
       {
@@ -42,7 +45,7 @@ export const APPLICATIONS_FAMS: FamLayout[] = [
         flip: false,
         kw: 'champagne,cocktail,gold',
         lock: 41,
-        images: ['/images/applications/foil-wine-1.jpg'],
+        images: ['/images/applications/foil-wine-1.png'],
         ctaHref: '/shop#foil-wine',
       },
     ],
@@ -53,9 +56,30 @@ export const APPLICATIONS_FAMS: FamLayout[] = [
     steel: true,
     specnote: true,
     scenes: [
-      { key: 'nanoGoldBeauty', flip: false, kw: 'cosmetics,serum,gold', lock: 61, ctaHref: '/shop#nano-gold-serum' },
-      { key: 'nanoGoldDelivery', flip: true, kw: 'laboratory,research,medical', lock: 54, ctaHref: '/shop#nano-gold-raw' },
-      { key: 'nanoGoldMaterial', flip: false, kw: 'laboratory,analysis,microscope', lock: 32, ctaHref: '/contact' },
+      {
+        key: 'nanoGoldBeauty',
+        flip: false,
+        kw: 'cosmetics,serum,gold',
+        lock: 61,
+        images: ['/images/applications/nano-gold-beauty.jpg'],
+        ctaHref: '/shop#nano-gold-serum',
+      },
+      {
+        key: 'nanoGoldDelivery',
+        flip: true,
+        kw: 'laboratory,research,medical',
+        lock: 54,
+        images: ['/images/applications/nano-gold-delivery.jpg'],
+        ctaHref: '/shop#nano-gold-raw',
+      },
+      {
+        key: 'nanoGoldMaterial',
+        flip: false,
+        kw: 'laboratory,analysis,microscope',
+        lock: 32,
+        images: ['/images/applications/nano-gold-material.jpg'],
+        ctaHref: '/contact',
+      },
     ],
   },
   {
@@ -63,7 +87,14 @@ export const APPLICATIONS_FAMS: FamLayout[] = [
     id: 'nano-silver',
     steel: true,
     scenes: [
-      { key: 'silverSterile', flip: false, kw: 'clean,hygiene,spray', lock: 81, ctaHref: '/shop#nano-silver-spray' },
+      {
+        key: 'silverSterile',
+        flip: false,
+        kw: 'clean,hygiene,spray',
+        lock: 81,
+        images: ['/images/applications/nano-silver.jpg'],
+        ctaHref: '/shop#nano-silver-spray',
+      },
     ],
   },
 ];

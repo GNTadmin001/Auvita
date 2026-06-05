@@ -4,6 +4,7 @@
 export const BRAND_TECH_HERITAGE_IMG = {
   kw: 'laboratory,gold,science',
   lock: 91,
+  img: '/images/brand-tech/heritage.jpg',
 };
 
 export const BRAND_TECH_DIAGRAMS = {
