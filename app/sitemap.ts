@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const isShop = meta.path === '/shop';
       return {
         url,
+        lastModified: new Date(),
         changeFrequency: (isNews ? 'daily' : 'weekly') as 'daily' | 'weekly',
         priority: isHome ? 1.0 : isShop ? 0.9 : 0.7,
         alternates: {
