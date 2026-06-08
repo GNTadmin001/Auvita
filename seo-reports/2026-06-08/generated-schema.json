@@ -1,0 +1,164 @@
+{
+  "_meta": {
+    "generated": "2026-06-08",
+    "site": "https://www.auvita.tw",
+    "note": "本檔為 Product schema 設計的 source of truth，供 Sheet→n8n→GitHub pipeline 使用。每個 Product 條目應由 Google Sheet 自動填入 sku/price/image 欄位。",
+    "changes_from_existing": [
+      "Organization: url/id/sameAs 改為 www.auvita.tw；補 contactPoint/address/telephone/certifications",
+      "WebSite: url 改 www；補 SearchAction",
+      "Product: 新增 image/sku/priceCurrency/shippingDetails/hasMerchantReturnPolicy 欄位結構",
+      "LocalBusiness: 新增（從 footer 地址推斷）",
+      "BreadcrumbList: 每個頁面應各自加入"
+    ]
+  },
+  "organization": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.auvita.tw/#organization",
+    "name": "AUVITA",
+    "alternateName": ["京華堂", "GNT 京華堂", "Gold Nanotech", "京華堂實業股份有限公司"],
+    "url": "https://www.auvita.tw",
+    "logo": "https://www.auvita.tw/assets/logo-nautilus-gold.png",
+    "foundingDate": "1993",
+    "description": "台灣唯一合法食用金製造商；以 PVD 物理氣相沉積製程生產 9999 純金金箔、金粉、奈米金、奈米銀。三國認證（EU E175、TFDA、SNQ），20+ 年研發，TWSE 1267。",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "availableLanguage": ["zh-TW", "en", "ja"],
+      "url": "https://www.auvita.tw/zh-TW/contact"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "瑞光路 258 巷 52 號",
+      "addressLocality": "內湖區",
+      "addressRegion": "台北市",
+      "addressCountry": "TW"
+    },
+    "sameAs": [
+      "https://www.gnt.com.tw",
+      "https://www.goldinalliance.com"
+    ],
+    "_TODO_sameAs_to_add": [
+      "https://www.linkedin.com/company/[FILL_IN]",
+      "https://www.facebook.com/[FILL_IN]",
+      "https://www.instagram.com/[FILL_IN]",
+      "https://twitter.com/[FILL_IN]"
+    ],
+    "_NOTE_certifications": "考慮加入 hasCredential 或 award 欄位列出 SNQ、EU E175、TFDA、HALAL 認證"
+  },
+  "website": {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.auvita.tw/#website",
+    "url": "https://www.auvita.tw",
+    "name": "AUVITA",
+    "publisher": {
+      "@id": "https://www.auvita.tw/#organization"
+    },
+    "inLanguage": ["zh-TW", "en", "ja"],
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://www.auvita.tw/zh-TW/shop?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  },
+  "local_business": {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://www.auvita.tw/#local-business",
+    "name": "京華堂實業股份有限公司",
+    "alternateName": "AUVITA / Gold Nanotech",
+    "url": "https://www.auvita.tw",
+    "logo": "https://www.auvita.tw/assets/logo-nautilus-gold.png",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "瑞光路 258 巷 52 號",
+      "addressLocality": "內湖區",
+      "addressRegion": "台北市",
+      "postalCode": "[FILL_IN]",
+      "addressCountry": "TW"
+    },
+    "parentOrganization": {
+      "@id": "https://www.auvita.tw/#organization"
+    }
+  },
+  "product_template": {
+    "_note": "每個商品一份，由 Sheet→n8n pipeline 自動生成並注入 /zh-TW/shop 頁面",
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "[PRODUCT_NAME_FROM_SHEET]",
+    "description": "[PRODUCT_DESC_FROM_SHEET]",
+    "image": ["[PRODUCT_IMAGE_URL_FROM_SHEET]"],
+    "sku": "[SKU_FROM_SHEET]",
+    "brand": {
+      "@type": "Brand",
+      "name": "AUVITA",
+      "@id": "https://www.auvita.tw/#organization"
+    },
+    "manufacturer": {
+      "@id": "https://www.auvita.tw/#organization"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "TWD",
+      "price": "[PRICE_FROM_SHEET]",
+      "availability": "https://schema.org/InStock",
+      "url": "[PRODUCT_URL_FROM_SHEET]",
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 7,
+        "returnMethod": "https://schema.org/ReturnByMail"
+      },
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "currency": "TWD",
+          "value": "[SHIPPING_COST]"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "businessDays": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"]
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 5,
+            "unitCode": "DAY"
+          }
+        }
+      }
+    },
+    "aggregateRating": {
+      "_note": "有真實評分才加；不可捏造",
+      "@type": "AggregateRating",
+      "ratingValue": "[RATING]",
+      "reviewCount": "[COUNT]"
+    }
+  },
+  "breadcrumb_template": {
+    "_note": "每個頁面一份 BreadcrumbList，在各頁面的 layout 中動態生成",
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "首頁",
+        "item": "https://www.auvita.tw/zh-TW"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "[CURRENT_PAGE_NAME]",
+        "item": "[CURRENT_PAGE_URL]"
+      }
+    ]
+  }
+}
