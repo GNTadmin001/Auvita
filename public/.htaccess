@@ -41,3 +41,24 @@ Options -Indexes
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/plain
 </IfModule>
+
+# ── 安全標頭（SEO H1）────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  # HSTS：瀏覽器強制走 HTTPS，1 年
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Clickjacking 防護
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # 阻止 MIME 嗅探
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Referrer 控制：同源完整 URL，跨源只傳 origin
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # 禁用不必要的瀏覽器 API
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+  # CSP：Report-Only 模式觀察（避免影響 GA/GTM；改 enforce 前先看 report）
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com; frame-src 'none'; object-src 'none'"
+</IfModule>
