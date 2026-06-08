@@ -147,7 +147,12 @@ export function organizationJsonLd() {
       postalCode: '114',
       addressCountry: 'TW',
     },
-    sameAs: ['http://www.gnt.com.tw', 'https://www.goldinalliance.com'],
+    sameAs: [
+      'http://www.gnt.com.tw',
+      'https://www.goldinalliance.com',
+      'https://www.facebook.com/profile.php?id=100078207371127',
+      'https://www.instagram.com/auvita.gift/',
+    ],
   };
 }
 
