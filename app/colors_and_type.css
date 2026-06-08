@@ -12,7 +12,7 @@
    (Latin display). Swap to the licensed faces in production if available.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+SC:wght@500;600&display=swap');
+/* Fonts are self-hosted via next/font/google (see app/layout.tsx). No @import needed. */
 
 :root {
   /* ---- 京華金 · Gold scale (the brand spine) -------------------------- */
@@ -83,9 +83,9 @@
   --critical: #A6492F;
 
   /* ---- Type families -------------------------------------------------- */
-  --font-serif:  "Noto Serif TC", "Songti TC", "STSong", serif;          /* 標題 · Ming display */
-  --font-latin-display: "Cormorant Garamond", "Noto Serif TC", serif;     /* Latin luxury display */
-  --font-latin-sc: "Cormorant SC", "Cormorant Garamond", serif;           /* small-caps labels */
+  --font-serif:  "Noto Serif TC", "Songti TC", "STSong", serif;
+  --font-latin-display: var(--font-cormorant-garamond), serif;
+  --font-latin-sc: var(--font-cormorant-sc), "Cormorant Garamond", serif;
   --font-sans:   "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
   --font-mono:   "SFMono-Regular", "Roboto Mono", ui-monospace, monospace;
 

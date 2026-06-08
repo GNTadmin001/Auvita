@@ -3,7 +3,7 @@
 // 維持「全量」原則（不只 2 題），否則會踩到 AeroJet 當初 FAQPage 只放 2 題的 SEO 債。
 import { getTranslations } from 'next-intl/server';
 
-export type FaqItem = { q: string; a: string };
+export type FaqItem = { q: string; a: string; link?: string };
 
 export async function getFaqItems(locale: string): Promise<FaqItem[]> {
   const t = await getTranslations({ locale, namespace: 'faq' });

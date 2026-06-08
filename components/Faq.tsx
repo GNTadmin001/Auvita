@@ -1,9 +1,7 @@
-// FAQ 區：Server Component（無 hook、無互動），用 <details>/<summary> 提供原生展開。
-// 樣式類別沿用 brand-tech / shop 的 .sec-tight / .wrap / reveal 等既有風格，避免新增 CSS。
-// i18n 標準分離：文字（含 q/a 陣列）在 locales/*.json 的 `faq` 命名空間。
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import type { FaqItem } from '@/lib/faq';
+import { Link } from '@/i18n/navigation';
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,
@@ -12,6 +10,7 @@ const richTags = {
 export default function Faq() {
   const t = useTranslations('faq');
   const items = t.raw('items') as FaqItem[];
+  const learnMore = t('learnMore');
   return (
     <section className="sec-tight" id="faq">
       <div className="wrap">
@@ -54,6 +53,22 @@ export default function Faq() {
               >
                 {item.a}
               </p>
+              {item.link && (
+                <Link
+                  href={item.link as string}
+                  style={{
+                    display: 'inline-block',
+                    marginTop: 10,
+                    fontSize: '0.85rem',
+                    color: 'var(--gold-400)',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid currentColor',
+                    paddingBottom: 1,
+                  }}
+                >
+                  {learnMore} →
+                </Link>
+              )}
             </details>
           ))}
         </div>

@@ -3,7 +3,6 @@ import { setRequestLocale } from 'next-intl/server';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import BrandTech from '@/components/BrandTech';
-import Faq from '@/components/Faq';
 import { getFaqItems } from '@/lib/faq';
 import { buildPageMetadata, breadcrumbJsonLd, faqJsonLd } from '@/lib/seo';
 
@@ -30,7 +29,6 @@ export default async function Page({ params }: Props) {
       />
       <SiteHeader active="brand" />
       <BrandTech />
-      <Faq />
       <SiteFooter />
     </>
   );
