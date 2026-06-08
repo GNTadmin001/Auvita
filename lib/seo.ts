@@ -100,7 +100,7 @@ export function buildPageMetadata(key: PageKey, locale: string): Metadata {
       title: meta.title,
       description: meta.description,
       url: `${SITE_URL}${langPath(locale, meta.path)}`,
-      images: [{ url: DEFAULT_OG_IMAGE }],
+      images: [{ url: DEFAULT_OG_IMAGE, width: 450, height: 600 }],
       locale,
     },
     twitter: {
