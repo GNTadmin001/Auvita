@@ -12,6 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-TW" suppressHydrationWarning>
+      <head>
+        <meta name="google-site-verification" content="5HC5M-WSGkv7RSjujU8xOLEf_vOVNPjzExnkeAncYp4" />
+      </head>
       <body suppressHydrationWarning>
         {children}
       </body>
