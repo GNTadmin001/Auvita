@@ -192,15 +192,53 @@ export function productItemListJsonLd(products: ProductLd[], locale: string) {
         brand: { '@type': 'Brand', name: 'AUVITA' },
         category: p.family,
         url: `${base}#${p.id}`,
-        offers: {
-          '@type': 'Offer',
-          priceCurrency: 'TWD',
-          price: p.ph ? 0 : p.price,
-          availability: p.ph
-            ? 'https://schema.org/PreOrder'
-            : 'https://schema.org/InStock',
-          url: `${base}#${p.id}`,
-        },
+        ...(p.ph
+          ? {}
+          : {
+              offers: {
+                '@type': 'Offer',
+                priceCurrency: 'TWD',
+                price: p.price,
+                availability: 'https://schema.org/InStock',
+                url: `${base}#${p.id}`,
+                shippingDetails: {
+                  '@type': 'OfferShippingDetails',
+                  shippingRate: {
+                    '@type': 'MonetaryAmount',
+                    value: 0,
+                    currency: 'TWD',
+                  },
+                  shippingDestination: {
+                    '@type': 'DefinedRegion',
+                    addressCountry: 'TW',
+                  },
+                  deliveryTime: {
+                    '@type': 'ShippingDeliveryTime',
+                    handlingTime: {
+                      '@type': 'QuantitativeValue',
+                      minValue: 1,
+                      maxValue: 2,
+                      unitCode: 'DAY',
+                    },
+                    transitTime: {
+                      '@type': 'QuantitativeValue',
+                      minValue: 1,
+                      maxValue: 3,
+                      unitCode: 'DAY',
+                    },
+                  },
+                },
+                hasMerchantReturnPolicy: {
+                  '@type': 'MerchantReturnPolicy',
+                  applicableCountry: 'TW',
+                  returnPolicyCategory:
+                    'https://schema.org/MerchantReturnFiniteReturnWindow',
+                  merchantReturnDays: 7,
+                  returnMethod: 'https://schema.org/ReturnByMail',
+                  returnFees: 'https://schema.org/FreeReturn',
+                },
+              },
+            }),
       },
     })),
   };
