@@ -206,6 +206,71 @@ export function productItemListJsonLd(products: ProductLd[], locale: string) {
   };
 }
 
+export function breadcrumbJsonLd(key: PageKey, locale: string) {
+  const meta = PAGE_META[key];
+  const segment = meta.path === '/' ? '' : meta.path;
+  const labels: Record<PageKey, string> = {
+    home: 'AUVITA',
+    applications: '產品應用',
+    'brand-tech': '品牌與技術',
+    contact: '聯絡我們',
+    'gold-history': '金的歷史',
+    news: '最新活動',
+    shop: '選購',
+  };
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'AUVITA',
+        item: `${SITE_URL}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: labels[key],
+        item: `${SITE_URL}/${locale}${segment}`,
+      },
+    ],
+  };
+}
+
+export function localBusinessJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${SITE_URL}/#local-business`,
+    name: 'AUVITA / GNT 京華堂',
+    image: `${SITE_URL}/assets/logo-nautilus-gold.png`,
+    url: SITE_URL,
+    telephone: '',
+    priceRange: '$$',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '瑞光路258巷52號',
+      addressLocality: '內湖區',
+      addressRegion: '台北市',
+      postalCode: '114',
+      addressCountry: 'TW',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 25.0784,
+      longitude: 121.5787,
+    },
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+    sameAs: [`${SITE_URL}`, 'http://www.gnt.com.tw'],
+  };
+}
+
 export function faqJsonLd(items: Array<{ q: string; a: string }>) {
   return {
     '@context': 'https://schema.org',

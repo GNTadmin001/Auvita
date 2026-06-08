@@ -5,7 +5,7 @@ import SiteFooter from '@/components/SiteFooter';
 import BrandTech from '@/components/BrandTech';
 import Faq from '@/components/Faq';
 import { getFaqItems } from '@/lib/faq';
-import { buildPageMetadata, faqJsonLd } from '@/lib/seo';
+import { buildPageMetadata, breadcrumbJsonLd, faqJsonLd } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -23,6 +23,10 @@ export default async function Page({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqItems)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd('brand-tech', locale)) }}
       />
       <SiteHeader active="brand" />
       <BrandTech />
