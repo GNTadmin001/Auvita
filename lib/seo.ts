@@ -120,12 +120,33 @@ export function organizationJsonLd() {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#organization`,
     name: 'AUVITA',
-    alternateName: ['京華金', 'GNT 京華堂', 'Gold Nanotech'],
+    alternateName: ['京華堂', 'GNT 京華堂', 'Gold Nanotech', '京華金'],
     url: SITE_URL,
     logo: `${SITE_URL}/assets/logo-nautilus-gold.png`,
     foundingDate: '1993',
     description:
       '台灣唯一合法食用金製造商；以 PVD 物理氣相沉積製程生產 9999 純金金箔、金粉、奈米金、奈米銀。',
+    identifier: 'TWSE:1267',
+    award: [
+      'SNQ 國家品質標章',
+      'EU E175 食用金認證',
+      'TFDA 台灣食品藥物管理署認證',
+      'HALAL 清真認證',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      url: `${SITE_URL}/zh-TW/contact`,
+      availableLanguage: ['zh-TW', 'en'],
+    },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '瑞光路258巷52號',
+      addressLocality: '內湖區',
+      addressRegion: '台北市',
+      postalCode: '114',
+      addressCountry: 'TW',
+    },
     sameAs: ['http://www.gnt.com.tw', 'https://www.goldinalliance.com'],
   };
 }
