@@ -170,6 +170,7 @@ type ProductLd = {
   desc: string;
   price: number;
   family: string;
+  img?: string;
   ph?: boolean;
 };
 
@@ -189,6 +190,8 @@ export function productItemListJsonLd(products: ProductLd[], locale: string) {
         name: p.zh,
         alternateName: p.en,
         description: p.desc,
+        sku: p.id,
+        image: p.img ? `${SITE_URL}${p.img}` : `${SITE_URL}/assets/logo-nautilus-gold.png`,
         brand: { '@type': 'Brand', name: 'AUVITA' },
         category: p.family,
         url: `${base}#${p.id}`,
