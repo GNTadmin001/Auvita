@@ -7,6 +7,7 @@ export const NAV_LINKS: NavItem[] = [
   { key: 'goldHistory', href: '/gold-history', active: 'history' },
   { key: 'brandTech', href: '/brand-tech', active: 'brand' },
   { key: 'shop', href: '/shop', active: 'shop' },
+  { key: 'news', href: '/news', active: 'news' },
   { key: 'contact', href: '/contact', active: 'contact' },
 ];
 
