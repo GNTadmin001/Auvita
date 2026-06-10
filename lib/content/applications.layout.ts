@@ -72,14 +72,6 @@ export const APPLICATIONS_FAMS: FamLayout[] = [
         images: ['/images/applications/nano-gold-delivery.jpg'],
         ctaHref: '/shop#nano-gold-raw',
       },
-      {
-        key: 'nanoGoldMaterial',
-        flip: false,
-        kw: 'laboratory,analysis,microscope',
-        lock: 32,
-        images: ['/images/applications/nano-gold-material.jpg'],
-        ctaHref: '/contact',
-      },
     ],
   },
   {
