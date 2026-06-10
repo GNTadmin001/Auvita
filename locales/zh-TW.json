@@ -10,14 +10,14 @@
   "home": {
     "intro": {
       "latin": "Aurum · Per Vacuum",
-      "zh": "永恆光輝",
+      "zh": "純淨 永恆",
       "en": "A purer form of gold — vaporized, never beaten.",
       "scroll": "Scroll"
     },
     "hero": {
       "kicker": "SNQ 國家品質標章 · 台灣唯一合法食用金",
-      "titleL1": "永恆光輝",
-      "titleL2": "的色彩",
+      "titleL1": "永恆光輝的色彩",
+      "titleL2": "",
       "sub": "A purer form of gold — vaporized, never beaten.",
       "lead": "當黃金不需被搥打、不再被溶解——而是化為分子的光，在真空中凝結成 100 nm 純金薄膜。9999 純度，SGS 第三方檢測，這就是汽化金。",
       "ctaPrimary": "找尋送禮靈感",
@@ -31,7 +31,7 @@
       "tile2Zh": "金粉複方",
       "go": "選購 →",
       "kicker": "Origins · 源起",
-      "title": "從半導體薄膜，<br></br>到<em>可品嚐的純金</em>",
+      "title": "極致工藝與美學創作",
       "p1": "物理氣相沉積誕生於 20 世紀中葉，因半導體而成熟的薄膜技術。在真空中，固態黃金加熱至氣態，金原子以奈米精度降落、沉積、凝結，形成極致均勻的純金薄膜。",
       "p2": "1993 年，<em>京華堂以冷凝技術，將黃金帶進了生醫運用。</em>食用金箔薄度僅 <em>100 nm</em>，約傳統槌打金箔的四分之一；純度 9999，每批 SGS 檢測。",
       "readMore": "閱讀完整故事"
@@ -41,12 +41,21 @@
       "title": "純金，<em>美在永遠</em>",
       "sub": "從一杯威士忌到一份禮物，食用金讓每個珍貴的場景，都成為永恆。",
       "items": [
-        { "en": "Cuisine", "zh": "金箔料理", "cta": "選購食用金箔" },
-        { "en": "Patisserie", "zh": "金粉甜點", "cta": "選購金粉複方" },
-        { "en": "Fine Spirits", "zh": "金釀黃金酒", "cta": "前往金釀聯盟" },
-        { "en": "Celebration", "zh": "金箔蛋糕", "cta": "選購食用金箔" },
-        { "en": "Gold Pure", "zh": "金純", "cta": "選購金粉複方" },
-        { "en": "Gift", "zh": "金粉包裝", "cta": "選購禮品禮盒" }
+        { "en": "Sushi", "zh": "金箔壽司", "cta": "選購食用金箔" },
+        { "en": "Chocolate", "zh": "巧克力慕斯", "cta": "選購金粉複方" },
+        { "en": "White Choc", "zh": "白巧克力慕斯", "cta": "選購金粉複方" },
+        { "en": "Cake", "zh": "金箔蛋糕", "cta": "選購食用金箔" },
+        { "en": "Berry", "zh": "紅果甜點", "cta": "選購金粉複方" },
+        { "en": "Mont Blanc", "zh": "蒙布朗栗子", "cta": "選購金粉複方" },
+        { "en": "Salad", "zh": "金箔沙拉", "cta": "選購食用金箔" },
+        { "en": "Cocktail", "zh": "金箔調酒", "cta": "前往金釀聯盟" },
+        { "en": "Cheesecake", "zh": "起司蛋糕", "cta": "選購食用金箔" },
+        { "en": "Gold Cake", "zh": "金粉蛋糕", "cta": "選購金粉複方" },
+        { "en": "Caviar", "zh": "魚子醬料理", "cta": "選購食用金箔" },
+        { "en": "Coffee", "zh": "金箔咖啡", "cta": "選購食用金箔" },
+        { "en": "Salmon Roe", "zh": "鮭魚卵壽司", "cta": "選購食用金箔" },
+        { "en": "Salmon", "zh": "鮭魚壽司", "cta": "選購食用金箔" },
+        { "en": "Gold Pure", "zh": "金純", "cta": "選購金粉複方" }
       ]
     },
     "symbol": {
@@ -83,6 +92,16 @@
         { "gl": "友", "en": "Friendship", "zh": "老友", "desc": "三十年不變的，不只金。一杯黃金威士忌，說盡情誼。" },
         { "gl": "己", "en": "Self Love", "zh": "犒賞自己", "desc": "不為誰，只為自己。今天你做得很好。" }
       ]
+    },
+    "aesthetic": {
+      "kicker": "Aesthetic Creation · 美學創作",
+      "title": "純金，<em>入鏡的美</em>",
+      "sub": "甜點、巧克力、料理——金箔讓每一個創作瞬間，都值得被記錄。",
+      "dessert": "甜點",
+      "chocolate": "巧克力",
+      "cuisine": "料理",
+      "placeholder": "影片建置中",
+      "more": "最新活動 →"
     },
     "cta": {
       "title": "現在就讓生命中的下一個時刻，<br></br><foil>閃耀如金</foil>",
@@ -588,7 +607,7 @@
   },
   "header": {
     "brandName": "京華金",
-    "brandTagline": "GOLD NANOTECH · SINCE 1993",
+    "brandTagline": "SINCE 1993",
     "menuLabel": "選單",
     "nav": {
       "home": "首頁",
@@ -612,7 +631,7 @@
   },
   "footer": {
     "brandName": "京華金",
-    "brandTagline": "GOLD NANOTECH · SINCE 1993",
+    "brandTagline": "SINCE 1993",
     "blurb": "以食用金為本，同一道汽化式（PVD）工藝延伸至奈米金、奈米銀。台灣唯一合法食用金製造商，9999 純金，世界級純淨與分散均勻度。",
     "cols": {
       "explore": "探索",

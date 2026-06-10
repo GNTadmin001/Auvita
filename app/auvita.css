@@ -207,6 +207,16 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
 
 /* APPLICATIONS image grid */
 .appgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.appgrid.appgrid-4col{grid-template-columns:repeat(5,1fr);gap:20px;}
+.appgrid-4col .appcard{height:130px;}
+.appgrid-4col .appcard .meta{padding:12px;}
+.appgrid-4col .appcard .meta h4{font-size:14px;margin:4px 0 6px;}
+.appgrid-4col .appcard .meta .k{font-size:7px;}
+#scenes .sec-head h2{font-size:clamp(21px,2.94vw,36px);}
+#scenes .sec-head p{font-size:11px;}
+.lb-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;cursor:zoom-out;backdrop-filter:blur(6px);}
+.lb-img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;box-shadow:0 24px 80px rgba(0,0,0,.6);cursor:default;animation:lb-in .22s var(--ease-rise);}
+@keyframes lb-in{from{opacity:0;transform:scale(.92);}to{opacity:1;transform:scale(1);}}
 .appcard{position:relative;height:340px;border-radius:6px;overflow:hidden;border:1px solid var(--k-line-soft);transition:transform .6s var(--ease-rise);}
 .appcard:hover{transform:translateY(-5px);}
 .appcard .ph{position:absolute;inset:0;}
@@ -383,6 +393,23 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
 /* decorative product card adds a small zh tagline under name */
 .prod .ptag-zh{font-size:12.5px;color:var(--k-mute);font-weight:300;letter-spacing:.04em;margin:-4px 0 10px;}
 
+/* ---- 美學創作 video tabs ---- */
+.aesthetic-stage{display:grid;grid-template-columns:1fr 280px;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--k-line-soft);}
+.aesthetic-video-wrap{position:relative;aspect-ratio:16/9;background:var(--k-bg-3);overflow:hidden;}
+.aesthetic-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease;}
+.aesthetic-vid.active{opacity:1;}
+.aesthetic-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--k-mute);font-size:13px;letter-spacing:.12em;}
+.aesthetic-tabs{display:flex;flex-direction:column;background:var(--k-bg-3);border-left:1px solid var(--k-line-soft);}
+.aesthetic-tab{flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;padding:28px 28px;border:none;background:transparent;cursor:pointer;border-bottom:1px solid var(--k-line-soft);transition:background .3s ease;text-align:left;}
+.aesthetic-tab:last-child{border-bottom:none;}
+.aesthetic-tab:hover{background:var(--k-bg-2);}
+.aesthetic-tab.active{background:var(--k-bg-2);}
+.aesthetic-tab.active::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--k-gold);}
+.aesthetic-tab{position:relative;}
+.aesthetic-tab-num{font-family:var(--font-latin-sc);font-size:10px;letter-spacing:.28em;color:var(--k-mute);}
+.aesthetic-tab.active .aesthetic-tab-num{color:var(--k-gold-lt);}
+.aesthetic-tab-label{font-family:var(--font-serif);font-size:20px;font-weight:600;letter-spacing:.08em;color:var(--k-white);}
+
 /* ---- 藥用 · 中藥 heritage feature ---- */
 .med{display:grid;grid-template-columns:1.05fr .95fr;gap:0;border:1px solid var(--k-line-soft);border-radius:10px;overflow:hidden;}
 .med .ph{min-height:480px;}
@@ -399,7 +426,7 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
   .wrap,.wrap-narrow{padding:0 28px;}
   .nav-links{display:none;}
   .origins,.symbol,.pd-main,.feature{grid-template-columns:1fr;gap:40px;}
-  .appgrid,.prodgrid,.prodgrid.cols3{grid-template-columns:1fr 1fr;}
+  .appgrid,.appgrid.appgrid-4col,.prodgrid,.prodgrid.cols3{grid-template-columns:1fr 1fr;}
   .origins .ph{height:auto;aspect-ratio:4/3;}
   .prod .ph{height:auto;aspect-ratio:1/1;}
   .appcard{height:auto;aspect-ratio:3/4;}      /* 原 340px 固定，2 欄並排太高 */
@@ -408,7 +435,36 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
   .foot-top{grid-template-columns:1fr 1fr;}
   .stats{gap:48px;}
   .pd-gallery{position:static;}
-  .tax-map,.nano-grid,.med{grid-template-columns:1fr;}
+  .tax-map,.nano-grid,.med,.aesthetic-stage{grid-template-columns:1fr;}
+  .aesthetic-tabs{flex-direction:row;border-left:none;border-top:1px solid var(--k-line-soft);}
+  .aesthetic-tab{border-bottom:none;border-right:1px solid var(--k-line-soft);padding:18px 20px;}
+  .aesthetic-tab:last-child{border-right:none;}
+  .aesthetic-tab.active::before{width:100%;height:2px;top:0;bottom:auto;}
   .nanocard,.med .med-body{padding:38px 30px;}
   .med .ph{min-height:300px;}
+}
+
+/* ============================================================================
+   MagicBento — Spotlight + Border Glow（gold themed）
+   ============================================================================ */
+.magic-bento-section{position:relative;user-select:none;}
+.magic-bento-grid{display:contents;}
+
+.magic-bento-card{
+  --glow-x:50%;--glow-y:50%;--glow-intensity:0;--glow-radius:430px;
+}
+
+.magic-bento-glow .magic-bento-card::after{
+  content:'';position:absolute;inset:0;padding:1px;border-radius:inherit;
+  background:radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(201,162,39,calc(var(--glow-intensity)*.9)) 0%,
+    rgba(201,162,39,calc(var(--glow-intensity)*.45)) 30%,
+    transparent 65%
+  );
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  pointer-events:none;z-index:3;
 }

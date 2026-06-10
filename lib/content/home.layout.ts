@@ -16,14 +16,23 @@ export const HOME_ORIGINS_TILES: HomeOriginsTile[] = [
   { kw: 'goldpowder,spice', lock: 8, img: '/images/home/origins-2.png' },
 ];
 
-// Scenes 6 張卡的圖 kw（順序與 locale home.scenes.items 對齊）。
+// Scenes 15 張卡的圖 kw（5×3，順序與 locale home.scenes.items 對齊）。
 export const HOME_SCENES_IMG: { kw: string; img: string }[] = [
-  { kw: 'sushi',   img: '/images/home/scenes-1.jpg' },
-  { kw: 'dessert', img: '/images/home/scenes-2.jpg' },
-  { kw: 'whisky',  img: '/images/home/scenes-3.png' },
-  { kw: 'cake',    img: '/images/home/scenes-4.jpg' },
-  { kw: 'gold',    img: '/images/home/scenes-5.png' },
-  { kw: 'giftbox', img: '/images/home/scenes-6.jpg' },
+  { kw: 'sushi',      img: '/images/home/scenes-1.jpg' },
+  { kw: 'chocolate',  img: '/images/home/scenes-2.jpg' },
+  { kw: 'whitechoc',  img: '/images/home/scenes-3.jpg' },
+  { kw: 'cake',       img: '/images/home/scenes-4.jpg' },
+  { kw: 'berry',      img: '/images/home/scenes-5.jpg' },
+  { kw: 'montblanc',  img: '/images/home/scenes-6.jpg' },
+  { kw: 'salad',      img: '/images/home/scenes-7.jpg' },
+  { kw: 'cocktail',   img: '/images/home/scenes-8.jpg' },
+  { kw: 'cheesecake', img: '/images/home/scenes-9.jpg' },
+  { kw: 'goldcake',   img: '/images/home/scenes-10.jpg' },
+  { kw: 'caviar',     img: '/images/home/scenes-11.jpg' },
+  { kw: 'coffee',     img: '/images/home/scenes-12.jpg' },
+  { kw: 'salmonroe',  img: '/images/home/scenes-13.jpg' },
+  { kw: 'salmon',     img: '/images/home/scenes-14.jpg' },
+  { kw: 'goldpure',   img: '/images/home/scenes-15.jpg' },
 ];
 
 // ShopTeaser 4 張卡的圖 kw + hot 旗標（順序與 locale home.shopTeaser.items 對齊）。

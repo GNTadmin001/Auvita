@@ -34,13 +34,13 @@ export default function Intro() {
     <section className="cover" id="cover">
       <div className="cover-sticky">
         <div className="cover-frame">
-          <img
+          <video
             className="cover-img"
-            alt=""
-            src="/images/intro/hero.jpg"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).remove();
-            }}
+            src="/videos/hero.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
           />
         </div>
         <div className="cover-in">

@@ -3,24 +3,19 @@
 // 原 home.jsx 的 Hero/Origins/Applications(改名 Scenes)/Symbol(改名 BrandSymbol)/ShopTeaser/Gifts/CTA/Home。
 // i18n 標準分離：文字在 locales/*.json 的 `home` 命名空間（含 t.rich/t.raw）；
 // 圖片 kw/lock 與 hot 旗標在 lib/content/home.layout.ts（三語共用、與 items 順序對齊）。
-import { useEffect, type ReactNode } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { IMG } from '@/lib/img';
 import { useReveal } from '@/lib/reveal';
 import Marquee from '@/components/Marquee';
 import GoldDust from '@/components/GoldDust';
-import PhImg from '@/components/PhImg';
-import activeData from '@/data/promotions/active.json';
-import type { Promotion, SupportedLocale } from '@/types/promotion';
-import { NEWS_PLACEHOLDERS } from '@/lib/content/news.layout';
 import {
   HOME_HERO_IMG,
   HOME_ORIGINS_TILES,
   HOME_SCENES_IMG,
 } from '@/lib/content/home.layout';
-
-const PROMOS = activeData as unknown as Promotion[];
+import MagicBento from '@/components/MagicBento';
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,
@@ -74,15 +69,15 @@ function Hero() {
   return (
     <header className="hero" id="top">
       <div className="hero-media ph lg">
-        <img
+        <video
           className="ph-img"
-          alt=""
-          src={HOME_HERO_IMG.img || IMG(HOME_HERO_IMG.kw, HOME_HERO_IMG.lock, 1920, 1280)}
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).remove();
-          }}
+          src="/videos/hero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
         />
-        <span className="cap">Hero · 金箔料理 imagery</span>
+        <span className="cap">Hero · 金箔料理影片</span>
       </div>
       <div className="hero-particles">
         <GoldDust
@@ -100,10 +95,8 @@ function Hero() {
       </div>
       <div className="wrap hero-in">
         <div className="kicker reveal in">{t('kicker')}</div>
-        <h1 className="reveal in d1">
+        <h1 className="reveal in d1" style={{ fontSize: 'clamp(23px,3.5vw,48px)' }}>
           {t('titleL1')}
-          <br />
-          {t('titleL2')}
         </h1>
         <div className="sub reveal in d2">{t('sub')}</div>
         <p className="lead reveal in d2">{t('lead')}</p>
@@ -162,7 +155,7 @@ function Origins() {
           <div className="kicker reveal" style={{ display: 'block', marginBottom: '22px' }}>
             {t('kicker')}
           </div>
-          <h2 className="ed-title reveal d1" style={{ fontSize: '40px', marginBottom: '28px' }}>
+          <h2 className="ed-title reveal d1" style={{ fontSize: '20px', marginBottom: '28px' }}>
             {t.rich('title', richTags)}
           </h2>
           <p className="reveal d1">{t('p1')}</p>
@@ -176,103 +169,50 @@ function Origins() {
   );
 }
 
-function NewsCarousel() {
-  const t = useTranslations('news');
-  const locale = useLocale();
-  const loc = locale as SupportedLocale;
-  const hasPromos = PROMOS.length > 0;
-  return (
-    <section className="sec-tight" id="news">
-      <div className="wrap">
-        <div className="sec-head center" style={{ marginBottom: '48px' }}>
-          <span className="kicker reveal">{t('subhero.k')}</span>
-          <h2 className="reveal d1 ed-title">{t.rich('subhero.title', richTags)}</h2>
-        </div>
-        {hasPromos ? (
-          <div className="prodgrid cols3">
-            {PROMOS.map((p, i) => {
-              const c = p[loc] ?? p['zh-TW'];
-              const inner = (
-                <>
-                  <div className="ph">
-                    <img className="ph-img" src={p.image} alt={c.title} loading="lazy" />
-                    <span className="cap">{t('promo.cap')}</span>
-                  </div>
-                  <div className="pin">
-                    <span className="tag">{t('promo.tag')}</span>
-                    <h4>{c.title}</h4>
-                    <p className="desc">{c.description}</p>
-                  </div>
-                </>
-              );
-              return (
-                <div className={'prod reveal d' + (i % 3)} key={p.id}>
-                  {p.link ? (
-                    <a href={p.link} target="_blank" rel="noopener noreferrer">
-                      {inner}
-                    </a>
-                  ) : (
-                    inner
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <>
-            <div className="prodgrid cols3">
-              {NEWS_PLACEHOLDERS.map((p, i) => (
-                <div className={'prod reveal d' + (i % 3)} key={p.key}>
-                  <div className="ph">
-                    <PhImg kw={p.kw} lock={p.lock} src={p.img} />
-                    <span className="cap">{t(`placeholder.${p.key}.tag`)}</span>
-                  </div>
-                  <div className="pin">
-                    <span className="tag">
-                      {t(`placeholder.${p.key}.tag`)} {t('placeholder.tagSuffix')}
-                    </span>
-                    <h4>{t(`placeholder.${p.key}.zh`)}</h4>
-                    <p className="desc">{t('placeholder.desc')}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="ph-banner reveal">
-              <p>{t('banner.text')}</p>
-              <Link className="btn btn-out" href="/contact">
-                {t('banner.cta')}
-              </Link>
-            </div>
-          </>
-        )}
-      </div>
-    </section>
-  );
-}
-
 type SceneItem = { en: string; zh: string; cta: string };
 
 function Scenes() {
   const t = useTranslations('home.scenes');
   const items = t.raw('items') as SceneItem[];
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setLightbox(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox]);
+
   return (
     <section className="sec panel" id="scenes">
+      {lightbox && (
+        <div className="lb-overlay" onClick={() => setLightbox(null)}>
+          <img className="lb-img" src={lightbox} alt="" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
       <div className="wrap">
         <div className="sec-head center" style={{ marginBottom: '60px' }}>
           <span className="kicker reveal">{t('kicker')}</span>
           <h2 className="reveal d1 ed-title">{t.rich('title', richTags)}</h2>
           <p className="reveal d2">{t('sub')}</p>
         </div>
-        <div className="appgrid">
+        <MagicBento spotlightRadius={430} enableBorderGlow enableSpotlight>
+        <div className="appgrid appgrid-4col">
           {items.map((it, i) => {
             const img = HOME_SCENES_IMG[i] ?? HOME_SCENES_IMG[0];
+            const src = img.img || IMG(img.kw, 30 + i, 760, 900);
             return (
-              <article className={'appcard reveal d' + ((i % 3) + 1)} key={it.zh}>
+              <article
+                className={'appcard magic-bento-card reveal d' + ((i % 5) + 1)}
+                key={it.zh}
+                style={{ cursor: 'zoom-in' }}
+                onClick={() => setLightbox(src)}
+              >
                 <div className="ph">
                   <img
                     className="ph-img"
                     alt=""
-                    src={img.img || IMG(img.kw, 30 + i, 760, 900)}
+                    src={src}
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).remove();
                     }}
@@ -282,12 +222,13 @@ function Scenes() {
                 <div className="meta">
                   <div className="k">{it.en}</div>
                   <h4>{it.zh}</h4>
-                  <Link href="/shop">{it.cta} →</Link>
+                  <Link href="/shop" onClick={(e) => e.stopPropagation()}>{it.cta} →</Link>
                 </div>
               </article>
             );
           })}
         </div>
+        </MagicBento>
       </div>
     </section>
   );
@@ -330,6 +271,74 @@ function BrandSymbol() {
   );
 }
 
+const AESTHETIC_VIDEOS = [
+  { id: 'brownie', src: '/videos/brownie.mp4', labelKey: 'dessert' },
+  { id: 'macaron', src: '/videos/macaron.mp4', labelKey: 'chocolate' },
+  { id: 'bread',   src: '/videos/bread.mp4',   labelKey: 'cuisine' },
+];
+
+const AESTHETIC_PLAYBACK_RATE = 0.7;
+
+function AestheticCreation() {
+  const t = useTranslations('home.aesthetic');
+  const [active, setActive] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((el) => {
+      if (el) el.playbackRate = AESTHETIC_PLAYBACK_RATE;
+    });
+  }, []);
+
+  return (
+    <section className="sec panel" id="aesthetic">
+      <div className="wrap">
+        <div className="sec-head center" style={{ marginBottom: '60px' }}>
+          <span className="kicker reveal">{t('kicker')}</span>
+          <h2 className="reveal d1 ed-title">{t.rich('title', richTags)}</h2>
+          <p className="reveal d2">{t('sub')}</p>
+        </div>
+        <div className="aesthetic-stage reveal d1">
+          <div className="aesthetic-video-wrap">
+            {AESTHETIC_VIDEOS.map((v, i) => (
+              <video
+                key={v.id}
+                ref={(el) => { videoRefs.current[i] = el; }}
+                className={'aesthetic-vid' + (i === active ? ' active' : '')}
+                src={v.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ))}
+            <div className="aesthetic-placeholder" style={{ display: AESTHETIC_VIDEOS.every(v => !v.src) ? 'flex' : 'none' }}>
+              <span>{t('placeholder')}</span>
+            </div>
+          </div>
+          <div className="aesthetic-tabs">
+            {AESTHETIC_VIDEOS.map((v, i) => (
+              <button
+                key={v.id}
+                className={'aesthetic-tab' + (i === active ? ' active' : '')}
+                onClick={() => setActive(i)}
+              >
+                <span className="aesthetic-tab-num">0{i + 1}</span>
+                <span className="aesthetic-tab-label">{t(v.labelKey)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="aesthetic-cta reveal d2" style={{ textAlign: 'center', marginTop: '48px' }}>
+          <Link className="btn btn-out" href="/news">
+            {t('more')}
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CTA() {
   const t = useTranslations('home.cta');
   return (
@@ -361,9 +370,9 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
-      <Origins />
-      <NewsCarousel />
       <Scenes />
+      <Origins />
+      <AestheticCreation />
       <BrandSymbol />
       <CTA />
     </>

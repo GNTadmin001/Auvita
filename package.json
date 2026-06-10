@@ -12,6 +12,7 @@
     "build:full": "npm run validate:promotions && npm run build:active && npm run build"
   },
   "dependencies": {
+    "gsap": "^3.15.0",
     "next": "15.5.19",
     "next-intl": "^4.13.0",
     "ogl": "^1.0.11",
