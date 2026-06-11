@@ -442,3 +442,57 @@
   .procstep::before{margin-bottom:10px;}
   .site-foot .sf-top{gap:32px;}
 }
+
+/* ============================ PDF Flip Viewer ============================ */
+/* .ph-btn：讓商品縮圖區域也能當按鈕觸發，外觀與 .ph <a> 完全一致 */
+.ph-btn{display:block;width:100%;height:280px;background:none;border:none;padding:0;cursor:pointer;position:relative;overflow:hidden;}
+@media(max-width:900px){.ph-btn{height:auto;aspect-ratio:1/1;}}
+
+/* overlay 遮罩 */
+.pdf-overlay{position:fixed;inset:0;z-index:900;background:rgba(6,5,4,.88);display:flex;align-items:center;justify-content:center;
+  padding:16px;animation:pdf-fade-in .22s var(--ease-rise);}
+@keyframes pdf-fade-in{from{opacity:0}to{opacity:1}}
+
+/* modal 容器 */
+.pdf-modal{position:relative;display:flex;flex-direction:column;max-width:1100px;width:100%;max-height:92vh;
+  background:var(--k-bg-2);border:1px solid var(--k-line-soft);border-radius:12px;overflow:hidden;}
+
+/* header */
+.pdf-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--k-line-soft);flex-shrink:0;}
+.pdf-title{font-family:var(--font-serif);font-size:16px;font-weight:500;letter-spacing:.1em;color:var(--k-white);}
+.pdf-hactions{display:flex;align-items:center;gap:12px;}
+.pdf-ext-btn{font-family:var(--font-latin-sc);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:8px 16px;border-radius:999px;border:1px solid var(--k-line);background:transparent;color:var(--k-gold-lt);
+  cursor:pointer;transition:all .3s var(--ease-rise);text-decoration:none;white-space:nowrap;}
+.pdf-ext-btn:hover{border-color:var(--k-gold);background:rgba(212,174,95,.08);}
+.pdf-close-btn{width:32px;height:32px;border-radius:999px;border:1px solid var(--k-line-soft);background:transparent;
+  color:var(--k-mute);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;
+  transition:all .25s var(--ease-rise);}
+.pdf-close-btn:hover{border-color:var(--k-line);color:var(--k-white);}
+
+/* viewer 區塊（arrows + pages） */
+.pdf-viewer{display:flex;align-items:center;justify-content:center;gap:0;flex:1;overflow:auto;padding:20px 0;min-height:0;}
+.pdf-arrow{width:48px;height:64px;flex-shrink:0;border:none;background:transparent;color:var(--k-dim);
+  font-size:40px;line-height:1;cursor:pointer;transition:color .25s,transform .25s;display:flex;align-items:center;justify-content:center;
+  user-select:none;}
+.pdf-arrow:hover:not(.off){color:var(--k-gold-lt);transform:scale(1.15);}
+.pdf-arrow.off{opacity:.2;cursor:default;}
+
+/* page spread */
+.pdf-spread{display:flex;gap:8px;align-items:flex-start;justify-content:center;}
+.pdf-spread canvas{display:block;border-radius:2px;box-shadow:0 4px 24px rgba(0,0,0,.5);}
+
+/* loading */
+.pdf-loading{padding:60px 40px;color:var(--k-mute);font-size:13px;letter-spacing:.08em;}
+
+/* footer */
+.pdf-footer{text-align:center;padding:10px 20px;border-top:1px solid var(--k-line-soft);flex-shrink:0;}
+.pdf-pageinfo{font-family:var(--font-latin-sc);font-size:10.5px;letter-spacing:.18em;color:var(--k-mute);}
+
+@media(max-width:767px){
+  .pdf-modal{max-height:95vh;border-radius:10px;}
+  .pdf-header{padding:12px 14px;}
+  .pdf-title{font-size:14px;}
+  .pdf-viewer{padding:12px 0;}
+  .pdf-arrow{width:36px;font-size:30px;}
+}
