@@ -110,7 +110,8 @@ export default function SiteHeader({
           <Link className="brand" href="/" onClick={() => setMenuOpen(false)}>
             <img src="/assets/logo-nautilus-gold.png" alt="" />
             <span className="wm">
-              {t('brandName')}<small>{t('brandTagline')}</small>
+              <img className="wm-logo" src="/images/kyowado-logo-white.png" alt={t('brandName')} />
+              <small>{t('brandTagline')}</small>
             </span>
           </Link>
           <nav className="mainnav">

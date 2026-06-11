@@ -1,12 +1,17 @@
 'use client';
 // 全部商品 — 三家族（金箔/奈米金/奈米銀）分類篩選 + 加入購物車。原 shop.jsx 的 Shop/ShopCard。
 // 文字暫內嵌中文（i18n 留收尾）。SiteHeader/SiteFooter 由 page.tsx 組裝。
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useReveal } from '@/lib/reveal';
 import { Cart, ntd } from '@/lib/cart';
 import { PRODUCTS, FAMILIES, GROUPS, type Product } from '@/lib/products';
 import PhImg from '@/components/PhImg';
+
+const richTags = {
+  em: (c: ReactNode) => <em>{c}</em>,
+};
 
 // shown：深連結目標卡。由 React 掌控「已顯示」狀態（in + reveal-instant），
 // 而非用 classList 手動加 —— 否則 flash 在 2.2s 清除時 React 重寫 class 會把手動加的洗掉。
@@ -53,6 +58,7 @@ function ShopCard({ p, flash, shown }: { p: Product; flash?: boolean; shown?: bo
 }
 
 export default function Shop() {
+  const t = useTranslations('shop');
   const [filter, setFilter] = useState('all');
   const [highlightId, setHighlightId] = useState('');
   // pinned：深連結造訪過的商品 id。永久標記為已顯示，避免 highlightId 清除後 React 覆寫 class。
@@ -114,15 +120,11 @@ export default function Shop() {
       <section className="subhero">
         <div className="wrap">
           <div className="crumbs rise">
-            <Link href="/">首頁</Link> ／ 全部商品
+            <Link href="/">{t('crumbHome')}</Link> ／ {t('crumb')}
           </div>
-          <span className="sh-k rise">Shop · 全部商品</span>
-          <h1 className="rise d1">
-            一處選購，<em>三個家族</em>
-          </h1>
-          <p className="sh-lead rise d2">
-            食用金箔、奈米金、奈米銀，同源於汽化式（PVD）工藝，於此一頁總覽。加入購物車後於結帳頁計算總額。
-          </p>
+          <span className="sh-k rise">{t('k')}</span>
+          <h1 className="rise d1">{t.rich('title', richTags)}</h1>
+          <p className="sh-lead rise d2">{t('lead')}</p>
           <div className="shop-filter rise d3">
             {FAMILIES.map((f) => (
               <button

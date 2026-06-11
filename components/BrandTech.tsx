@@ -1,13 +1,12 @@
 'use client';
-// 品牌與技術 — 品牌歷史 + 汽化式 PVD 技術 + 規格 + 差異化對比 + 認證 + 歷年研究全收錄。
+// 品牌與技術 — 汽化式 PVD 技術 + 規格 + 差異化對比 + 認證 + 歷年研究全收錄。
 // i18n 標準分離：文字／表格／清單在 locales/*.json 的 `brandTech` 命名空間（含 STEPS / SPECS / DIFFS /
 // CERTS / RESEARCH / JOURNALS 走 t.raw 陣列）；圖片路徑在 lib/content/brand-tech.layout.ts。
-import { useState, type ReactNode } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useReveal, useHashScroll } from '@/lib/reveal';
-import PhImg from '@/components/PhImg';
-import { BRAND_TECH_HERITAGE_IMG, BRAND_TECH_DIAGRAMS } from '@/lib/content/brand-tech.layout';
+import { BRAND_TECH_PROCESS_IMG, BRAND_TECH_CAROUSEL } from '@/lib/content/brand-tech.layout';
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,
@@ -17,7 +16,7 @@ const richTags = {
 type Step = { h: string; p: string };
 type DStat = { dv: string; dl: string };
 type SpecRow = { k: string; v: string; num?: string };
-type DiffRow = { k: string; a: string; t: string; j: string };
+type DiffRow = { k: string; a: string; t: string };
 type CertItem = { seal: string; h: string; en: string; meta1: string; meta2: string; p: string };
 type ResearchLine = 'foil' | 'nano' | 'both';
 type ResearchEntry = { year: string; partner: string; topic: string; line: ResearchLine };
@@ -28,10 +27,18 @@ export default function BrandTech() {
   useHashScroll();
   const t = useTranslations('brandTech');
   const [tab, setTab] = useState<Tab>('all');
+  const [carouselIdx, setCarouselIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCarouselIdx((i) => (i + 1) % BRAND_TECH_CAROUSEL.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
 
   const steps = t.raw('tech.steps') as Step[];
   const dstats = t.raw('tech.dstats') as DStat[];
-  const specRows = t.raw('specs.rows') as SpecRow[];
   const diffRows = t.raw('vs.rows') as DiffRow[];
   const certs = t.raw('cert.items') as CertItem[];
   const research = t.raw('research.entries') as ResearchEntry[];
@@ -61,28 +68,14 @@ export default function BrandTech() {
         </div>
       </section>
 
-      {/* 品牌歷史 */}
-      <section className="sec panel">
-        <div className="wrap">
-          <div className="origins">
-            <div className="ph reveal">
-              <PhImg kw={BRAND_TECH_HERITAGE_IMG.kw} lock={BRAND_TECH_HERITAGE_IMG.lock} src={BRAND_TECH_HERITAGE_IMG.img} />
-              <span className="cap">{t('heritage.cap')}</span>
-            </div>
-            <div className="body reveal d1">
-              <span className="kicker" style={{ display: 'block', marginBottom: '18px' }}>
-                {t('heritage.kicker')}
-              </span>
-              <h2 className="ed-title" style={{ fontSize: 'clamp(26px,3.4vw,42px)', marginBottom: '24px' }}>
-                {t.rich('heritage.title', richTags)}
-              </h2>
-              <p>{t.rich('heritage.p1', richTags)}</p>
-              <p>{t.rich('heritage.p2', richTags)}</p>
-              <p>{t.rich('heritage.p3', richTags)}</p>
-              <p>{t.rich('heritage.p4', richTags)}</p>
-            </div>
-          </div>
-        </div>
+      {/* 製程全幅大圖 */}
+      <section style={{ width: '100%', background: '#fff', padding: 0, margin: 0 }}>
+        <img
+          src={BRAND_TECH_PROCESS_IMG}
+          alt="汽化金箔 PVD 製程：從瑞士純金原料汽化、奈米金顆粒晶粒成長、晶粒聚結、縫道填補，沉積成 100 nm 純金薄膜"
+          loading="lazy"
+          style={{ display: 'block', width: '100%', height: 'auto' }}
+        />
       </section>
 
       {/* 技術 */}
@@ -110,62 +103,64 @@ export default function BrandTech() {
               </div>
             ))}
           </div>
-          <div
-            className="reveal d2"
-            style={{
-              marginTop: '44px',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
-              gap: '16px',
-            }}
-          >
-            <div className="ph" style={{ height: '320px', borderRadius: '6px' }}>
-              <img
-                className="ph-img"
-                src={BRAND_TECH_DIAGRAMS.a}
-                alt={t('tech.diagrams.a.alt')}
-                loading="lazy"
-              />
-              <span className="cap">{t('tech.diagrams.a.cap')}</span>
-            </div>
-            <div className="ph" style={{ height: '320px', borderRadius: '6px' }}>
-              <img
-                className="ph-img"
-                src={BRAND_TECH_DIAGRAMS.b}
-                alt={t('tech.diagrams.b.alt')}
-                loading="lazy"
-              />
-              <span className="cap">{t('tech.diagrams.b.cap')}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 規格 */}
-      <section className="sec panel" id="specs" style={{ scrollMarginTop: '90px' }}>
-        <div className="wrap">
-          <div className="sec-head reveal" style={{ marginBottom: '26px' }}>
-            <span className="kicker" style={{ color: 'var(--nano-steel)' }}>
-              {t('specs.kicker')}
-            </span>
-            <h2 style={{ marginTop: '16px', fontSize: 'clamp(24px,3vw,36px)' }}>{t('specs.title')}</h2>
-          </div>
-          <table className="spectable reveal">
-            <tbody>
-              {specRows.map((row, i) => (
-                <tr key={i}>
-                  <td className="k">{row.k}</td>
-                  <td className="v">
-                    {row.num ? <span className="num">{row.num}</span> : null}
-                    {row.v}
-                  </td>
-                </tr>
+          <div className="reveal d2" style={{ marginTop: '44px' }}>
+            <div
+              style={{
+                position: 'relative',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                background: '#111',
+                height: 'clamp(260px,36vw,480px)',
+              }}
+            >
+              {BRAND_TECH_CAROUSEL.map((img, i) => (
+                <img
+                  key={img.src}
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    opacity: carouselIdx === i ? 1 : 0,
+                    transition: 'opacity 0.9s ease',
+                  }}
+                />
               ))}
-            </tbody>
-          </table>
-          <p className="specnote reveal" style={{ marginTop: '22px' }}>
-            {t('specs.specnote')}
-          </p>
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '14px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  display: 'flex',
+                  gap: '8px',
+                  zIndex: 2,
+                }}
+              >
+                {BRAND_TECH_CAROUSEL.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCarouselIdx(i)}
+                    aria-label={`Slide ${i + 1}`}
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      border: 'none',
+                      padding: 0,
+                      cursor: 'pointer',
+                      background: carouselIdx === i ? '#fff' : 'rgba(255,255,255,0.38)',
+                      transition: 'background 0.3s',
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -212,9 +207,6 @@ export default function BrandTech() {
                   <th style={{ textAlign: 'left', padding: '14px 16px', fontSize: '14px', color: 'var(--k-mute)' }}>
                     {t('vs.headers.traditional')}
                   </th>
-                  <th style={{ textAlign: 'left', padding: '14px 16px', fontSize: '14px', color: 'var(--k-mute)' }}>
-                    {t('vs.headers.japan')}
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -231,9 +223,6 @@ export default function BrandTech() {
                     </td>
                     <td className="v" style={{ verticalAlign: 'top', color: 'var(--k-mute)' }}>
                       {d.t}
-                    </td>
-                    <td className="v" style={{ verticalAlign: 'top', color: 'var(--k-mute)' }}>
-                      {d.j}
                     </td>
                   </tr>
                 ))}

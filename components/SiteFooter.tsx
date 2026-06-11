@@ -32,7 +32,13 @@ export default async function SiteFooter() {
                 style={{ height: '40px' }}
               />
               <span className="wm" style={{ fontSize: '21px' }}>
-                {t('brandName')}<small>{t('brandTagline')}</small>
+                <img
+                  className="wm-logo"
+                  src="/images/kyowado-logo-white.png"
+                  alt={t('brandName')}
+                  style={{ height: '28px', width: 'auto', display: 'block' }}
+                />
+                <small>{t('brandTagline')}</small>
               </span>
             </Link>
             <p className="sf-blurb">{t('blurb')}</p>

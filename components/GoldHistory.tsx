@@ -15,13 +15,11 @@ const richTags = {
 };
 
 type Era = { y: string; zh: string; p: string };
-type MedEra = { h: string; p: string };
 
 export default function GoldHistory() {
   useReveal();
   const t = useTranslations('goldHistory');
   const eras = t.raw('eras') as Era[];
-  const medEras = t.raw('medEras') as MedEra[];
 
   return (
     <>
@@ -70,29 +68,6 @@ export default function GoldHistory() {
               <p>{t('museum.p3')}</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 藥用小史 mini-section */}
-      <section className="sec-tight">
-        <div className="wrap">
-          <div className="sec-head reveal" style={{ marginBottom: '40px' }}>
-            <span className="kicker">{t('medSection.kicker')}</span>
-            <h2 style={{ marginTop: '18px', fontSize: 'clamp(26px,3.4vw,40px)' }}>
-              {t('medSection.title')}
-            </h2>
-          </div>
-          <div className="proc">
-            {medEras.map((e) => (
-              <div className="procstep reveal" key={e.h}>
-                <h4>{e.h}</h4>
-                <p>{e.p}</p>
-              </div>
-            ))}
-          </div>
-          <p className="specnote reveal" style={{ marginTop: '26px' }}>
-            {t('medSection.specnote')}
-          </p>
         </div>
       </section>
 

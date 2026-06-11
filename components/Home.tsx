@@ -155,7 +155,7 @@ function Origins() {
           <div className="kicker reveal" style={{ display: 'block', marginBottom: '22px' }}>
             {t('kicker')}
           </div>
-          <h2 className="ed-title reveal d1" style={{ fontSize: '20px', marginBottom: '28px' }}>
+          <h2 className="ed-title reveal d1" style={{ fontSize: '24px', marginBottom: '28px' }}>
             {t.rich('title', richTags)}
           </h2>
           <p className="reveal d1">{t('p1')}</p>
@@ -328,11 +328,6 @@ function AestheticCreation() {
               </button>
             ))}
           </div>
-        </div>
-        <div className="aesthetic-cta reveal d2" style={{ textAlign: 'center', marginTop: '48px' }}>
-          <Link className="btn btn-out" href="/news">
-            {t('more')}
-          </Link>
         </div>
       </div>
     </section>
