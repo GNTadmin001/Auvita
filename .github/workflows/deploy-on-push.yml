@@ -82,6 +82,7 @@ jobs:
           local-dir: ./out/
           server-dir: ${{ secrets.FTP_REMOTE_PATH || '/' }}
           log-level: minimal
+          retries: 1
           # 增量同步：靠遠端 .ftp-deploy-sync-state.json 追蹤差異（首次 clean-slate 已完成）。
 
       - name: Commit auto-generated active/archive (if changed)
