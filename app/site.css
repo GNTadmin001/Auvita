@@ -25,7 +25,7 @@
 .site-head .brand{display:flex;align-items:center;gap:12px;}
 .site-head .brand img{height:36px;}
 .site-head .brand .wm{font-family:var(--font-serif);font-weight:600;font-size:18px;letter-spacing:.2em;line-height:1;}
-.site-head .brand .wm .wm-logo{height:24px;width:auto;display:block;}
+.site-head .brand .wm .wm-logo{height:40px;width:auto;display:block;}
 .site-head .brand .wm small{display:block;font-family:var(--font-latin-sc);font-size:8px;letter-spacing:.34em;color:var(--k-mute);margin-top:4px;white-space:nowrap;}
 
 .mainnav{display:flex;align-items:center;gap:6px;}

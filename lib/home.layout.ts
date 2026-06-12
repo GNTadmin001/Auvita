@@ -13,7 +13,7 @@ export type HomeOriginsTile = { kw: string; lock: number; img: string };
 // Origins 兩塊磁磚的圖（對應 locale home.origins.tile1*/tile2*）。
 export const HOME_ORIGINS_TILES: HomeOriginsTile[] = [
   { kw: 'goldleaf,dessert', lock: 5, img: '/images/home/origins-1.jpg' },
-  { kw: 'goldpowder,spice', lock: 8, img: '/images/home/origins-2.png' },
+  { kw: 'goldpowder,spice', lock: 8, img: '/images/home/origins-2.jpg' },
 ];
 
 // Scenes 15 張卡的圖 kw（5×3，順序與 locale home.scenes.items 對齊）。
