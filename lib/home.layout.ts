@@ -34,21 +34,3 @@ export const HOME_SCENES_IMG: { kw: string; img: string }[] = [
   { kw: 'salmon',     img: '/images/home/scenes-14.jpg' },
   { kw: 'goldpure',   img: '/images/home/scenes-15.jpg' },
 ];
-
-// ShopTeaser 4 張卡的圖 kw + hot 旗標（順序與 locale home.shopTeaser.items 對齊）。
-export const HOME_SHOP_TEASER_IMG: { kw: string; hot: boolean; img: string }[] = [
-  { kw: 'goldleaf',  hot: true,  img: '/images/home/shop-1.png' },
-  { kw: 'spice',     hot: false, img: '/images/home/shop-2.jpg' },
-  { kw: 'chocolate', hot: false, img: '/images/home/shop-3.jpg' },
-  { kw: 'giftbox',   hot: false, img: '/images/home/shop-4.png' },
-];
-
-// Gifts 6 張卡的圖 kw（順序與 locale home.gifts.items 對齊）。
-export const HOME_GIFTS_IMG: { kw: string; img: string }[] = [
-  { kw: 'celebration', img: '/images/home/gifts-1.jpg' },
-  { kw: 'wedding',     img: '/images/home/gifts-2.png' },
-  { kw: 'graduation',  img: '/images/home/gifts-3.png' },
-  { kw: 'baby',        img: '/images/home/gifts-4.jpg' },
-  { kw: 'whisky',      img: '/images/home/gifts-5.png' },
-  { kw: 'spa',         img: '/images/home/gifts-6.jpg' },
-];

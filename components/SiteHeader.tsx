@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link, useRouter, usePathname } from '@/i18n/navigation';
 import CartButton from '@/components/CartButton';
 import CartDrawer from '@/components/CartDrawer';
-import { NAV_LINKS, APP_MENU, LANGS, type AppMenuItem } from '@/lib/content/header.layout';
+import { NAV_LINKS, APP_MENU, LANGS, type AppMenuItem } from '@/lib/header.layout';
 
 function Chev() {
   return (

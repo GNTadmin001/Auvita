@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useReveal } from '@/lib/reveal';
 import PhImg from '@/components/PhImg';
-import { GOLD_HISTORY_MUSEUM_IMG } from '@/lib/content/gold-history.layout';
+import { GOLD_HISTORY_MUSEUM_IMG } from '@/lib/gold-history.layout';
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,

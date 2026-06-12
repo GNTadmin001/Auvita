@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { FOOTER_COLS, CERTS, type FootColItem } from '@/lib/content/footer.layout';
+import { FOOTER_COLS, CERTS, type FootColItem } from '@/lib/footer.layout';
 
 function FootLink({ label, href, external }: { label: string; href: string; external?: boolean }) {
   if (external) {

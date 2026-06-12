@@ -1,20 +1,19 @@
 'use client';
-// 首頁主體（Hero → Marquee → Origins → Scenes → Symbol → ShopTeaser → Gifts → CTA）。
-// 原 home.jsx 的 Hero/Origins/Applications(改名 Scenes)/Symbol(改名 BrandSymbol)/ShopTeaser/Gifts/CTA/Home。
+// 首頁主體（Hero → Marquee → Origins → Scenes → Symbol → Aesthetic → CTA）。
 // i18n 標準分離：文字在 locales/*.json 的 `home` 命名空間（含 t.rich/t.raw）；
 // 圖片 kw/lock 與 hot 旗標在 lib/content/home.layout.ts（三語共用、與 items 順序對齊）。
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import { IMG } from '@/lib/img';
 import { useReveal } from '@/lib/reveal';
+import { IMG } from '@/lib/products';
 import Marquee from '@/components/Marquee';
 import GoldDust from '@/components/GoldDust';
 import {
   HOME_HERO_IMG,
   HOME_ORIGINS_TILES,
   HOME_SCENES_IMG,
-} from '@/lib/content/home.layout';
+} from '@/lib/home.layout';
 import MagicBento from '@/components/MagicBento';
 
 const richTags = {

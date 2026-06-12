@@ -1,5 +1,8 @@
 // 商品資料（原 shop.jsx 的 PRODUCTS / FAMILIES / GROUPS）。純資料，client 元件可直接 import。
 // 奈米金 / 奈米銀 已合併為「汽化材料」群，ph:true 為佔位商品（示意）。
+// IMG：線上 placeholder 圖（loremflickr，依 lock 穩定）；之後換成品牌實拍只改此函式。
+export const IMG = (kw: string, lock: number | string, w = 1000, h = 750): string =>
+  `https://loremflickr.com/${w}/${h}/${encodeURIComponent(kw)}?lock=${lock}`;
 
 export type Product = {
   id: string;
@@ -33,19 +36,17 @@ export const PRODUCTS: Product[] = [
   { id: 'foil-leaf',  zh: '食用金箔',   en: 'Edible Gold Leaf',   family: '金箔', fam: 'foil', price: 1280, kw: 'gold,leaf',           lock: 12, img: '/images/金純.jpg',
     desc: '汽化式 9999 純金箔，薄度僅傳統槌打金箔的四分之一，分布更均勻。',
     tag: '最受歡迎', unit: '禮盒（10 片裝）',
-    longDesc: '9999 純金、純水，PVD 製程，薄度僅 100nm。無色無味，開瓶即用——為飲品、湯品、甜點與酒品鋪上一層永恆金光。台灣唯一取得 TFDA 食品添加許可之汽化金箔。',
-    thumbImgs:  ['/images/金純.jpg', '/images/金純.jpg', '/images/金純.jpg', '/images/金純.jpg'],
-    thumbLabels: ['正面 · 禮盒', '金箔 · 微距', '情境 · 香檳', '證書 · SGS'],
+    longDesc: '9999 純食用金箔，純水。無色無味，開瓶即用，為您的飲品鋪上一層永恆金光。',
+    thumbImgs:  ['/images/金純.jpg', '/images/products/foil-leaf-2.jpg', '/images/products/foil-leaf-3.jpg', '/images/products/foil-leaf-4.jpg'],
+    thumbLabels: ['正面', '金箔 ', '情境 ', '證書 '],
     thumbKw:    ['giftbox', 'goldleaf', 'champagne', 'document'],
     specs: [
-      ['純度 Purity',    '9999 (≥99.9%)'],
-      ['薄度 Thickness', '100 nm'],
-      ['製程 Process',   'PVD 物理氣相沉積'],
-      ['基底 Base',      '製藥級純水'],
+      ['成分 Base',      '水，金箔'],
       ['風味 Taste',     '無色・無味'],
-      ['規格 Format',    '單片裝 ×10 / 禮盒'],
-      ['產地 Origin',    '台灣製造'],
-      ['認證 Certs',     'TFDA・EU E175・FDA'],
+      ['規格 Format',    '5cc/瓶，1.66mg金箔。10瓶裝 禮盒'],
+      ['金箔純度 Purity',    '99.99%'],
+      ['金箔厚度 Thickness', '100 nm'],
+      ['認證 Certification',    '2025SNG國家品質獎章，食品添加許可證，SGS檢驗'],
     ],
     steps: [
       ['01', '開瓶，少量取用',     '用乾燥的工具輕輕取出少量金箔，一點點就有驚人的視覺效果。'],
@@ -54,13 +55,22 @@ export const PRODUCTS: Product[] = [
     ],
     certs: ['SNQ 2025', 'SGS ≥99.9%', 'TFDA', 'EU · E175', 'FDA', 'HALAL'],
   },
-  { id: 'foil-powder', zh: '食用金粉',  en: 'Edible Gold Powder',  family: '金箔', fam: 'foil', price: 1680, kw: 'gold,powder,dust',     lock: 64, img: '/images/4號金粉.png',
-    desc: '金粉與金粉複方，供調飲、烘焙創作，可調粒徑兼顧視覺與風味。' },
+  { id: 'foil-powder', zh: '金粉複方',  en: 'Edible Gold Powder',  family: '金箔', fam: 'foil', price: 1680, kw: 'gold,powder,dust',     lock: 64, img: '/images/4號金粉.png',
+    desc: '金粉與天然香料結合的複方，可用在各式料理，兼顧視覺、風味、法規限制。' },
   { id: 'foil-wine',  zh: '金箔酒',    en: 'Gold Leaf Wine',      family: '金箔', fam: 'foil', price: 2880, kw: 'champagne,gold',       lock: 41, img: '/images/products/foil-wine.png', noOnline: true,
     pdfUrl: '/documents/foil-wine-dm.pdf', externalUrl: 'https://www.goldinalliance.com/',
-    desc: '9999 純金箔懸浮酒體，隨光流轉。宴席與禮贈的華麗主角。' },
+    desc: '9999 純金箔懸浮在酒中，隨光流轉。宴席與禮贈的華麗主角。' },
   { id: 'foil-choc',  zh: '金箔巧克力', en: 'Gold Chocolate',      family: '金箔', fam: 'foil', price: 980,  kw: 'chocolate,gold,luxury', lock: 33, img: '/images/products/foil-choc.jpg',
     desc: '純金箔點綴的手工巧克力，黑金相映，節慶禮盒之選。' },
+  { id: 'foil-candy', zh: '金箔冰糖棒', en: 'Gold Leaf Rock Candy Stick', family: '金箔', fam: 'foil', price: 580, kw: 'candy,sugar,gold', lock: 55, img: IMG('candy,sugar,gold', 55),
+    desc: '純冰糖結晶棒點綴 9999 純金箔，晶瑩金色甜點，可作調酒攪拌棒或獨立享用。',
+    longDesc: '以天然純冰糖為基底，表面點綴 9999 食用金箔。獨特的金色視覺搭配純淨甜味，適合作為精緻飲品的攪拌棒、禮盒配件或高端甜點擺盤。',
+    specs: [
+      ['成分 Ingredients',   '冰糖，金箔'],
+      ['金箔純度 Purity',    '99.99%'],
+      ['認證 Certification', 'TFDA，SGS 檢驗'],
+    ],
+  },
 
   // ---- 汽化材料 family（奈米金 + 奈米銀 合併） ----
   { id: 'nano-gold-raw',   zh: '奈米金原液',     en: 'Nano Gold Solution',   family: '汽化材料', fam: 'vaporize', price: 0, kw: 'laboratory,liquid,science',  lock: 73, img: '/images/products/nano-gold-raw.jpg',   ph: true,

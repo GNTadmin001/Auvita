@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useReveal, useHashScroll } from '@/lib/reveal';
 import PhImg from '@/components/PhImg';
-import { APPLICATIONS_FAMS, type SceneLayout } from '@/lib/content/applications.layout';
+import { APPLICATIONS_FAMS, type SceneLayout } from '@/lib/applications.layout';
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,

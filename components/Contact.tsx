@@ -11,7 +11,7 @@ import {
   CONTACT_LINKS,
   CONTACT_STORES,
   CONTACT_DIRECT,
-} from '@/lib/content/contact.layout';
+} from '@/lib/contact.layout';
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,

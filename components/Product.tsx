@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { Link } from '@/i18n/navigation';
 import { useReveal } from '@/lib/reveal';
 import { Cart } from '@/lib/cart';
-import { IMG } from '@/lib/img';
+import { IMG } from '@/lib/products';
 import { type Product } from '@/lib/products';
 
 const PdfFlipViewer = dynamic(() => import('@/components/PdfFlipViewer'), { ssr: false });
@@ -29,9 +29,14 @@ export default function Product({ p }: { p: Product }) {
   return (
     <>
       <div className="wrap pd">
-        <div className="crumbs reveal in">
-          <Link href="/">首頁</Link> &nbsp;/&nbsp; <Link href="/shop">全部商品</Link> &nbsp;/&nbsp;{' '}
-          <span style={{ color: 'var(--k-gold-lt)' }}>{p.zh}</span>
+        <div className="crumbs reveal in" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span>
+            <Link href="/">首頁</Link> &nbsp;/&nbsp; <Link href="/shop">全部商品</Link> &nbsp;/&nbsp;{' '}
+            <span style={{ color: 'var(--k-gold-lt)' }}>{p.zh}</span>
+          </span>
+          <Link href="/shop" style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--k-mute)', letterSpacing: '.12em' }}>
+            ← 上一頁
+          </Link>
         </div>
 
         <div className="pd-main">
@@ -84,7 +89,7 @@ export default function Product({ p }: { p: Product }) {
 
             {p.specs && (
               <div className="spec-table">
-                {p.specs.slice(0, 5).map(([k, v]) => (
+                {p.specs.map(([k, v]) => (
                   <div className="r" key={k}>
                     <span className="k">{k}</span>
                     <span className="v">{v}</span>

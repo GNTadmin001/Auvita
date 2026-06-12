@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
-import type { FaqItem } from '@/lib/faq';
+type FaqItem = { q: string; a: string; link?: string };
 import { Link } from '@/i18n/navigation';
 
 const richTags = {

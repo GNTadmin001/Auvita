@@ -1,6 +1,6 @@
 'use client';
 // 圖位元件。原 shared.jsx 的 PhImg。onError 時把自己移除（露出 .ph 底圖）。
-import { IMG } from '@/lib/img';
+import { IMG } from '@/lib/products';
 
 type Props = { kw: string; lock: number | string; w?: number; h?: number; eager?: boolean; src?: string };
 

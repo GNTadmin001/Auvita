@@ -6,7 +6,7 @@ import { useState, useEffect, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useReveal, useHashScroll } from '@/lib/reveal';
-import { BRAND_TECH_PROCESS_IMG, BRAND_TECH_CAROUSEL } from '@/lib/content/brand-tech.layout';
+import { BRAND_TECH_PROCESS_IMG, BRAND_TECH_CAROUSEL } from '@/lib/brand-tech.layout';
 
 const richTags = {
   em: (c: ReactNode) => <em>{c}</em>,

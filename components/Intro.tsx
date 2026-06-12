@@ -2,7 +2,7 @@
 // 首頁 cover splash（logy 風格：捲動時整版圖縮成框、封面字上浮淡出）。原 home.jsx 的 Intro。
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { IMG } from '@/lib/img';
+import { IMG } from '@/lib/products';
 
 export default function Intro() {
   const t = useTranslations('home.intro');

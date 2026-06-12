@@ -5,7 +5,7 @@ import { Link } from '@/i18n/navigation';
 import PhImg from '@/components/PhImg';
 import activeData from '@/data/promotions/active.json';
 import type { Promotion, SupportedLocale } from '@/types/promotion';
-import { NEWS_PLACEHOLDERS } from '@/lib/content/news.layout';
+import { NEWS_PLACEHOLDERS } from '@/lib/news.layout';
 
 const PROMOS = activeData as unknown as Promotion[];
 
